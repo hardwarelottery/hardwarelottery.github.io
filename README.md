@@ -1,1 +1,3 @@
-This is a repository for the website to accompany the work "The Hardware Lottery."
+# hardwarelottery.github.io
+
+This project is a website to accompany the essay Hardware Lottery: How Hardware and Software Determine What Research Ideas Succeed and Fail

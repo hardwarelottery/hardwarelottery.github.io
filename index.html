@@ -1,0 +1,3536 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Hardware Lottery</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" value="summary" />
+    <meta name="twitter:title" content="The Hardware Lottery" />
+    <meta
+      name="twitter:description"
+      content="How hardware and software determine what research ideas succeed and fail."
+    />
+    <meta name="twitter:url" content="https://hardwarelottery.github.io" />
+    <meta
+      name="twitter:image"
+      content="https://cdn.glitch.com/34a5d448-e59c-4ef1-bfad-458d185273e4%2Funnamed%20(7).jpg?v=1586843526885"
+    />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Sara Hooker" />
+    <meta name="twitter:site" content="@sarahookr" />
+
+    <meta property="og:image:width" content="1920" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:title" content="The Hardware Lottery" />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:description"
+      content="How hardware and software determine what research ideas succeed and fail."
+    />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.com/34a5d448-e59c-4ef1-bfad-458d185273e4%2Funnamed%20(7).jpg?v=1586843526885"
+    />
+    <meta property="og:url" content="https://hardwarelottery.github.io" />
+    <meta property="og:site_name" content="The Hardware Lottery" />
+    <meta property="og:locale" content="en_US" />
+
+    <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
+    <meta name="citation_title" content="The Hardware Lottery" />
+    <meta
+      name="citation_fulltext_html_url"
+      content="https://hardwarelottery.github.io"
+    />
+    <meta name="citation_author" content="Hooker, Sara" />
+    <meta name="citation_author_institution" content="Google Brain" />
+    <meta name="citation_publication_date" content="2020/5/30" />
+    <meta name="citation_url" content="https://arxiv.org/abs/2009.06489" />
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-152824096-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "UA-152824096-1");
+    </script>
+
+    <!--  https://schema.org/Article -->
+    <meta
+      property="description"
+      itemprop="description"
+      content="How hardware determines what research ideas succeed and fail."
+    />
+    <meta property="article:author" content="Sara Hooker" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"
+    />
+    <style>
+       body {
+        overflow-x: hidden;
+      }
+      .scroll-down {
+        width: 80px;
+        height: 40px;
+        right: 10px;
+        bottom: 10px;
+        position: absolute;
+        font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+        color: #FFFFFF;
+        opacity: 0;
+        -webkit-transition: opacity 2s ease-in;
+        -moz-transition: opacity 2s ease-in;
+        -o-transition: opacity 2s ease-in;
+        -ms-transition: opacity 2s ease-in;
+        transition: opacity 2s ease-in;
+      }
+      .scroll-down span {
+        margin-top: 5px;
+        position: absolute;
+        left: 50%;
+        transform: translate(-100%, 0) rotate(45deg);
+        transform-origin: 100% 100%;
+        height: 2px;
+        width: 10px;
+        background: #FFFFFF;
+      }
+      .scroll-down span:nth-of-type(2) {
+        transform-origin: 0 100%;
+        transform: translate(0, 0) rotate(-45deg);
+      }
+            body {
+              font-family: "Roboto", "Helvetica", sans-serif;
+              margin: 0;
+              padding: 0;
+              display: flex;
+              flex-direction: column;
+              font-size: 14px;
+            }
+
+            html {
+              margin: 0;
+              padding: 0;
+              height: 100%;
+            }
+
+            table td {
+              font-size: 12px;
+              text-align: center;
+              outline: 1px solid white;
+              padding: 0;
+              margin: 0;
+            }
+
+            table.inner td {
+              padding: 0;
+              margin: 0;
+              border: 0;
+              width: 25%;
+            }
+
+            .footer-row {
+              height: 15px;
+            }
+
+            table.inner tr {
+              border: 0;
+            }
+
+            table.inner th {
+              padding: 8px;
+            }
+
+            table th {
+              font-size: 11px;
+            }
+
+            table {
+              border-collapse: collapse;
+              border-spacing: 0;
+            }
+
+            thead,
+            tbody {
+              display: block;
+            }
+
+            .rotated {
+              transform: rotate(90deg);
+              transform-origin: left bottom 0;
+              margin-top: -111px;
+              font-weight: bold;
+              font-size: 1.2em;
+              padding: 8px;
+            }
+
+            #headers {
+              z-index: 1000;
+              background-color: white;
+              height: 65px;
+              vertical-align: middle;
+              border-bottom: 1px solid #ccc;
+              margin-bottom: 10px;
+            }
+
+            #headers span {
+              background-color: white;
+              display: inline-block;
+              line-height: 65px;
+              font-size: 1.2em;
+              font-weight: bold;
+              text-align: center;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+
+            .cover {
+              background: #1e283a;
+            }
+
+            .cover-container {
+              padding-top: 10px;
+              padding-left: 20px;
+              padding-bottom: 60px;
+            }
+            .descriptions_,
+            .description_ {
+              padding-top: 20px;
+            }
+            .subdescriptions_,
+            .subdescription_ {
+              padding-top: 0px;
+            }
+            .cover-container,
+            .descriptions_,
+            .subdescriptions_,
+            .subdescription_,
+            .description_ {
+              padding-right: 5px;
+              margin-right: auto;
+              margin-left: auto;
+            }
+
+            @media (min-width: 415px) {
+              authors .authors-affiliations,
+              .base-grid,
+              .imgs-container .cover-container,
+              .descriptions_,
+              .description_,
+            .subdescriptions_,
+            .subdescription_,
+              .notepaper
+              .column_portfolio {
+                width: 385px;
+              }
+              .column_portfolio_
+              .notepaper,
+                .column_portfolio
+                figcaption {
+                padding: 0;
+                padding-top: 4px;
+                word-wrap: break-word;
+                word-break: break-word;
+              }
+            }
+
+            @media (min-width: 768px) {
+              authors .authors-affiliations,
+              .imgs-container,
+              .cover-container,
+              .descriptions_,
+                      .subdescriptions_,
+              .notepaper,
+            .subdescription_,
+              .description_,
+              .column_portfolio {
+                width: 700px;
+              }
+            }
+
+            @media (min-width: 992px) {
+              authors .authors-affiliations,
+              .imgs-container,
+              .cover-container,
+              .descriptions_,
+              .description_,
+              .notepaper,
+          .subdescriptions_,
+            .subdescription_,
+              .column_portfolio {
+                width: 800px;
+              }
+            }
+
+            @media (min-width: 1200px) {
+              authors .authors-affiliations,
+              .imgs-container,
+              .cover-container,
+              .notepaper,
+              .descriptions_,
+              .subdescription_,
+              .subdescriptions_,
+              .description_,
+              .column_portfolio {
+                width: 1100px;
+              }
+            }
+
+            .cover h1 {
+              font-family: "Roboto", "Gotham A", "Gotham B";
+              letter-spacing: 0.05em;
+              font-size: 63px;
+              font-weight: 700;
+              margin-bottom: 0.5em;
+              text-transform: uppercase;
+            }
+
+            .cover h3 {
+              font-size: 30px;
+              letter-spacing: 0.05em;
+              font-weight: 500;
+            }
+
+            .descriptions_ h3 {
+              color: #313b4e;
+              opacity: 0.9;
+            }
+
+            .descriptions_ p {
+              color: #313b4e;
+              opacity: 0.9;
+              font-size: 16px;
+            }
+
+            .subdescription_ h3 {
+              color: #313b4e;
+              opacity: 0.9;
+            }
+
+            .subdescriptions_ p {
+              color: #313b4e;
+              opacity: 0.9;
+            }
+
+            .cover {
+              color: #ddd;
+            }
+
+            .authors {
+              margin-top: -40px;
+              overflow: hidden;
+              border-top: 1px solid rgba(0, 0, 0, 0.1);
+              font-size: 22px;
+              line-height: 1.8em;
+              padding: 1.5rem 0;
+              min-height: 1.8em;
+            }
+
+            .subtitle {
+              margin-top: -20px;
+            }
+
+            .icons {
+              margin-top: 30px;
+              padding-left: 4px;
+            }
+
+            .icons a {
+              display: inline-block;
+              font-size: 16px;
+              color: #ccc;
+              text-decoration: none;
+            }
+
+            .paper-icon {
+              display: inline-block;
+            }
+
+            .paper-icon a {
+              line-height: 35px;
+              vertical-align: top;
+            }
+
+            .paper-icon:hover a {
+              cursor: pointer;
+              text-decoration: underline;
+            }
+
+            .description_ p {
+              width: 100%;
+              font-size: 16px;
+            }
+
+            .description_ img {
+              vertical-align: middle;
+              width: 100%;
+            }
+
+            .imgs-container {
+              display: table-row;
+            }
+
+            .img-container {
+              color: #62779c;
+              text-align: center;
+              font-weight: bold;
+              font-size: 14px;
+              padding-right: 6px;
+              display: table-cell;
+              width: 33%;
+            }
+
+            #headers.fixed-header {
+              position: fixed;
+              top: 0;
+            }
+
+            #table-container.fixed-header {
+              margin-top: 106px;
+            }
+
+            .image-label {
+              font-size: 15px;
+              text-align: left;
+              padding-bottom: 4px;
+              padding-top: 6px;
+              padding-left: 2px;
+              font-weight: normal;
+            }
+
+            .img-times-selector-container {
+              margin-left: -80px;
+              margin-top: -45px;
+              font-size: 18px;
+              font-weight: bold;
+              text-align: center;
+            }
+
+            .img-times-selector {
+              width: 175px;
+            }
+
+            #table {
+              margin-top: 0px;
+              width: 100%;
+            }
+
+            * {
+              box-sizing: border-box;
+            }
+           
+
+            figcaption {
+              padding: 4px 8px;
+              word-wrap: break-all;
+              word-break: break-all;
+            }
+
+
+            .column_header {
+              float: left;
+              width: 100%;
+              display: none; /* Hide columns by default */
+            }
+
+            /* Clear floats after rows */
+            .row:after {
+              content: "";
+              display: table;
+              clear: both;
+            }
+
+            /* Content */
+            .content {
+              background-color: white;
+              padding: 10px;
+              width: 90%;
+              margin-left: auto;
+              margin-right: auto;
+            }
+
+            .content_reduced {
+              background-color: white;
+              padding: 10px;
+              width: 70%;
+              margin-left: auto;
+              margin-right: auto;
+            }
+            /* The "show" class is added to the filtered elements */
+            .show {
+              display: block;
+            }
+
+            /* Style the buttons */
+            .btn {
+              border: none;
+              border-radius: 4px;
+              outline: none;
+              padding: 12px 16px;
+              font-size: 14px;
+              background-color: #599bb3;
+              color: #ffffff;
+              background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+              text-shadow: 0px 1px 0px #3d768a;
+              margin-right: auto;
+              margin-left: auto;
+              margin-bottom: 5px;
+              cursor: pointer;
+            }
+
+          
+
+            figcaption,
+            .figcaption {
+              color: rgba(0, 0, 0, 0.6);
+              font-size: 14px;
+              font-weight: bold;
+              line-height: 1.5em;
+            }
+
+            figcaption a {
+              color: rgba(0, 0, 0, 0.6);
+            }
+            figcaption b,
+            figcaption .strong_ {
+              font-weight: bold;
+              font-size: 14px;
+              color: #180A3E;
+            }
+
+            *{
+        margin: 0;
+        padding: 0;
+      }
+
+      .clear{
+        clear: both;
+      }
+
+
+      .notepaper {
+        font-size: 13px;
+        position: relative;
+        margin: 30px auto;
+        padding: 29px 20px 20px 45px;
+        width: 450px;
+        line-height: 30px;
+        text-shadow: 0 1px 1px white;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+
+      .notepaper:before, .notepaper:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+         font-size: 13px;
+      }
+
+      .notepaper:before {
+        left: 28px;
+        width: 2px;
+        border: solid #636363;
+        border-width: 0 1px;
+      }
+
+      .notepaper:after {
+        left: 0;
+        right: 0;
+      }
+
+      .quote {
+        font-family: Georgia, serif;
+        font-size: 8px;
+      }
+
+      .curly-quotes:before, .curly-quotes:after {
+        display: inline-block;
+        font-size: 13px;
+        vertical-align: top;
+        height: 30px;
+        line-height: 48px;
+      }
+
+      .curly-quotes:before {
+        content: '\201C';
+        margin-right: 4px;
+        margin-left: -8px;
+         font-size: 13px;
+      }
+
+      .curly-quotes:after {
+        content: '\201D';
+        margin-left: 4px;
+        margin-right: -8px;
+        font-size: 15px;
+      }
+
+      .quote-by {
+        display: block;
+        padding-right: 10px;
+        text-align: right;
+        font-size: 14px;
+        color: #180A3E;
+      }
+
+      .lt-ie8 .notepaper {
+        padding: 15px 25px;
+      }
+
+      <script src="https://storage.googleapis.com/quickdraw-models/sketchRNN/attention/lib/template.v1.js"></script>
+    </style>
+  </head>
+
+  <body>
+    <div id="scroll-container">
+      <div class="cover">
+        <div class="cover-container">
+          <div class="icons">
+            <div class="paper-icon">
+              <a href="https://arxiv.org/abs/2009.06489">
+                <img
+                  src="https://cdn.glitch.com/e7ea468b-4014-49eb-aa1b-d0498fa920c7%2Fhardware_lottery_paper.png?v=1600355237285"
+                  style="width: 100px"
+                /><br />PDF Version
+              </a>
+            </div>
+            <div class="paper-icon">
+              <a href="https://weightpruningdamage.github.io/">
+                <img
+                  src="https://cdn.glitch.com/34a5d448-e59c-4ef1-bfad-458d185273e4%2Funnamed%20(7).jpg?v=1586843526885"
+                  style="width: 100px"
+                /><br />
+                Other Writing
+              </a>
+            </div>
+            <div class="title"><h2>The Hardware Lottery</h2></div>
+            <div class="authors">Sara Hooker -- August, 2020</div>
+            <div class="subtitle"></div>
+            <div class="institutions"></div>
+          </div>
+        </div>
+      </div>
+      <div class="description_">
+        <h3>Introduction</h3>
+      </div>
+      <div class="descriptions_">
+        <p>
+          Hardware, systems and algorithms research communities have
+          historically had different incentive structures and fluctuating
+          motivation to engage with each other explicitly. This historical
+          treatment is odd given that hardware and software have frequently
+          determined which research ideas succeed (and fail).
+        </p>
+        <p>
+          This essay introduces the term hardware lottery to describe when a
+          research idea wins because it is suited to the available software and
+          hardware and not because the idea is universally superior to
+          alternative research directions. History tells us that hardware
+          lotteries can obfuscate research progress by casting successful ideas
+          as failures and can delay signaling that some research directions are
+          far more promising than others.
+        </p>
+
+        <p>
+          These lessons are particularly salient as we move into a new era of
+          closer collaboration between hardware, software and machine learning
+          research communities. After decades of treating hardware, software and
+          algorithms as separate choices, the catalysts for closer collaboration
+          include changing hardware economics
+          <dt-cite key="Hennessy2019"></dt-cite>, a “bigger is better” race in
+          the size of deep learning architectures<dt-cite
+            key="2018Amodei,2020arXiv200705558T"
+          ></dt-cite>
+          and the dizzying requirements of deploying machine learning to edge
+          devices<dt-cite key="warden2019tinyml"></dt-cite>.
+        </p>
+
+        <p>
+          Closer collaboration has centered on a wave of new generation hardware
+          that is "domain specific" to optimize for commercial use cases of deep
+          neural networks. While domain specialization creates important
+          efficiency gains, it arguably makes it more even more costly to stray
+          off of the beaten path of research ideas. While deep neural networks
+          have clear commercial use cases, there are early warning signs that
+          the path to true artificial intelligence may require an entirely
+          different combination of algorithm, hardware and software.
+        </p>
+        <p>
+          This essay begins by acknowledging a crucial paradox: machine learning
+          researchers mostly ignore hardware despite the role it plays in
+          determining what ideas succeed. What has incentivized the development
+          of software, hardware and algorithms in isolation? What follows is
+          part position paper, part historical review that attempts to answer
+          the question, "How does tooling choose which research ideas succeed
+          and fail, and what does the future hold?"
+        </p>
+
+        <div class="descriptions_">
+          <h3>Separate Tribes</h3>
+        </div>
+
+        <div class="notepaper">
+          <figure class="quote-by">
+            <blockquote class="quote-by">
+              It is not a bad description of man to describe him as a tool
+              making animal.
+            </blockquote>
+            <figcaption class="quote-by">— Charles Baggage, 1851</figcaption>
+          </figure>
+        </div>
+
+        <div class="descriptions_">
+          <p>
+            For the creators of the first computers the program was the machine.
+            Early machines were single use and were not expected to be
+            re-purposed for a new task because of both the cost of the
+            electronics and a lack of cross-purpose software. Charles Baggage’s
+            difference machine was intended solely to compute polynomial
+            functions (1817)<dt-cite key="bruce1991"></dt-cite>. Mark I was a
+            programmable calculator (1944)<dt-cite key="2014Mark1"></dt-cite>.
+            Rosenblatt’s perceptron machine computed a step-wise single layer
+            network (1958)<dt-cite key="1986Rosenblatt"></dt-cite>. Even the
+            Jacquard loom, which is often thought of as one of the first
+            programmable machines, in practice was so expensive to re-thread
+            that it was typically threaded once to support a pre-fixed set of
+            input fields (1804) <dt-cite key="posselt1888jacquard"></dt-cite>.
+          </p>
+
+          <div class="content_reduced">
+            <img
+              src="https://cdn.glitch.com/34a5d448-e59c-4ef1-bfad-458d185273e4%2F23593-004-D5156F2C.jpg?v=1586843532418"
+              alt="abstract_1"
+              style="width:100%"
+            />
+            <div class="figcaption">
+              <strong_
+                >Early computers such as the Mark I were single use and were not
+                expected to be repurposed. While Mark I could be programed to
+                compute different calculations, it was essentially a very
+                powerful reprogramable calculator and could not run the variety
+                of programs that we expect of our modern day machines. </strong_
+              ><br />
+            </div>
+          </div>
+          <p>
+            The specialization of these early computers was out of necessity and
+            not because computer architects thought one-off customized hardware
+            was intrinsically better. However, it is worth pointing out that our
+            own intelligence is both algorithm and machine. We do not inhabit
+            multiple brains over the course of our lifetime. Instead, the notion
+            of human intelligence is intrinsically associated with the physical
+            1400g of brain tissue and the patterns of connectivity between an
+            estimated 85 billion neurons in your head
+            <dt-cite key="2017neurons"></dt-cite>.
+          </p>
+
+          <p></p>
+
+          <div class="content_reduced">
+            <img
+              src="https://cdn.glitch.com/34a5d448-e59c-4ef1-bfad-458d185273e4%2FScreen%20Shot%202020-04-13%20at%204.40.37%20PM.png?v=1586835383539"
+              alt="abstract_1"
+              style="width:100%"
+            />
+            <div class="figcaption">
+              <strong_
+                > When we talk about human intelligence, the prototypical image that probably surfaces as
+                you read this is of a pink ridged cartoon blob. It is impossible to think of 
+                our cognitive intelligence 
+                without summoning up an image of the hardware it runs on. </strong_
+              ><br />
+            </div>
+          </div>
+          <p>
+            Today, in contrast to the necessary specialization in the very early
+            days of computing, machine learning researchers tend to think of
+            hardware, software and algorithm as three separate choices. This is
+            largely due to a period in computer science history that radically
+            changed the type of hardware that was made and incentivized
+            hardware, software and machine learning research communities to
+            evolve in isolation.
+          </p>
+          <p></p>
+
+          <p>
+            The general purpose computer era crystalized in 1969, when opinion
+            piece by a young engineer called Gordan Moore appeared in
+            Electronics magazine with the apt title “Cramming more components
+            onto circuit boards” <dt-cite key="moore1965"></dt-cite>. Moore
+            predicted you could cram double the amount of transistors on an
+            integrated circuit every two years. Originally, the article and
+            subsequent follow-up was motivated by a simple desire -- Moore
+            thought it would sell more chips. However, the prediction held and
+            motivated a remarkable decline in the cost of transforming energy
+            into information over the next 50 years.
+          </p>
+          <p>
+            Moore’s law combined with Dennard scaling
+            <dt-cite key="1050511"></dt-cite> enabled a factor of three
+            magnitude increase in microprocessor performance between 1980-2010
+            <dt-cite key="computerhistorymuseum"></dt-cite> . The predictable
+            increases in compute and memory every two years meant hardware
+            design became risk-adverse. Even for tasks which demanded higher
+            performance, the benefits of moving to specialized hardware could be
+            quickly eclipsed by the next generation of general purpose hardware
+            with ever growing compute.
+          </p>
+
+          <p>
+            The emphasis shifted to universal processors which could solve a
+            myriad of different tasks. Why experiment on more specialized
+            hardware designs for an uncertain reward when Moore’s law allowed
+            chip makers to lock in predictable profit margins? The few attempts
+            to deviate and produce specialized supercomputers for research were
+            financially unsustainable and short lived
+            <dt-cite key="2018acceleratingai,1995thinkingmachines"></dt-cite>. A
+            few very narrow tasks like mastering chess were an exception to this
+            rule because the prestige and visibility of beating a human
+            adversary attracted corporate sponsorship
+            <dt-cite key="Moravec98whenwill"></dt-cite>.
+          </p>
+          <div class="content_reduced">
+            <img
+              src=" https://cdn.glitch.com/34a5d448-e59c-4ef1-bfad-458d185273e4%2Fcri_000000422635.jpg?v=1586835367465"
+              alt="abstract_1"
+              style="width:100%"
+            />
+            <div class="figcaption">
+              <strong_
+                >The connection machine was one of the few examples of hardware
+                that deviated from general purpose cpus in the 1980s/90s.
+                Thinking Machines ultimately went bankrupt after inital
+                funding from DARPA dried up.</strong_
+              ><br />
+            </div>
+          </div>
+          <p>
+            Treating the choice of hardware, software and algorithm as
+            independent has persisted until recently. It is expensive to explore
+            new types of hardware, both in terms of time and capital required.
+            Producing a next generation chip typically costs $30-80 million
+            dollars and 2-3 years to develop
+            <dt-cite key="2019Feldman"></dt-cite>. These formidable barriers to
+            entry have produced a hardware research culture that might feel odd
+            or perhaps even slow to the average machine learning researcher.
+            While the number of machine learning publications has grown
+            exponentially in the last 30 years
+            <dt-cite key="Dean202011TD"></dt-cite>, the number of hardware
+            publications have maintained a fairly even cadence
+            <dt-cite key="singh_article"></dt-cite>. For a hardware company,
+            leakage of intellectual property can make or break the survival of
+            the firm. This has led to a much more closely guarded research
+            culture.
+          </p>
+          <p>
+            In the absence of any lever with which to influence hardware
+            development, machine learning researchers rationally began to treat
+            the hardware as a sunk cost to work around rather than something
+            fluid that could be shaped. 
+            However, just because we believe the other has vanished doesn’t mean
+            that it has. Early computer science history tells us there are many
+            hardware lotteries where the choice of hardware and software has
+            determined which ideas succeeded (and which failed).
+          </p>
+
+          <div class="descriptions_">
+            <h3>The Hardware Lottery</h3>
+          </div>
+
+          <div class="notepaper">
+            <figure class="quote-by">
+              <blockquote class="quote-by">
+                I suppose it is tempting, if the only tool you have is a hammer,
+                to treat everything as if it were a nail.
+              </blockquote>
+              <figcaption class="quote-by">— Abraham Maslow, 1966</figcaption>
+            </figure>
+          </div>
+
+          <div class="descriptions_">
+            <p>
+              The first sentence of Anna Karenina by Tolstoy reads “Happy
+              families are all alike, every unhappy family is unhappy in it’s
+              own way.”
+              <dt-cite key="tolstoy2016anna"></dt-cite>
+              Tolstoy is saying that it takes many different things for a
+              marriage to be happy -- financial stability, chemistry, shared
+              values, healthy offspring. However, it only takes one of these
+              aspects to not be present for a family to be unhappy. This has
+              been popularized as the Anna Karenina principle -- “a deficiency
+              in any one of a number of factors dooms an endeavor to failure.”
+              <dt-cite key="dwayne2001"></dt-cite>
+            </p>
+
+            <p>
+              Despite our preference to believe algorithms succeed or fail in
+              isolation, history tells us that most computer science
+              breakthroughs follow the Anna Kerenina principle. Successful
+              breakthroughs are often distinguished from failures by benefiting
+              from multiple criteria aligning surreptitiously. For computer
+              science research, this often depends upon winning what this essay
+              terms the hardware lottery — avoiding possible points of failure
+              in downstream hardware and software choices.
+            </p>
+            <p>
+              An early example of a hardware lottery is the analytical machine
+              (1837). Charles Babbage was a computer pioneer who designed a
+              machine that (at least in theory) could be programmed to solve any
+              type of computation. His analytical engine was never built in part
+              because he had difficulty fabricating parts with the correct
+              precision <dt-cite key="Raymond1990"></dt-cite>. The
+              electromagnetic technology to actually build the theoretical
+              foundations laid down by Baggage only surfaced during WWII. In the
+              first part of the 20th century, electronic vacuum tubes were
+              heavily used for radio communication and radar.
+              During WWII, these vacuum tubes were re-purposed to provide the
+              compute power necessary to break the German enigma code
+              <dt-cite key="2018vacuum"></dt-cite>.
+            </p>
+
+            <p>
+              As noted in the TV show Silicon Valley, often “being too early is
+              the same as being wrong”. When Baggage passed away in 1871, there
+              was no continuous path between his ideas and modern day computing.
+              The concept of a stored program, modifiable code, memory and
+              conditional branching were rediscovered a century later because
+              the right tools existed to empirically show that the idea worked.
+            </p>
+          </div>
+          <div class="content_reduced">
+            <img
+              src="https://cdn.glitch.com/e7ea468b-4014-49eb-aa1b-d0498fa920c7%2Fengine-structure.jpg?v=158749024575"
+              alt="abstract_1"
+              style="width:100%"
+            />
+            <div class="figcaption">
+              <strong_
+                >The analytical engine designed by Charles Babbage was never
+                built in part because he had difficulty fabricating parts with
+                the correct precision. This image depicts the general plan of
+                the analytical machine in 1840. </strong_
+              ><br />
+            </div>
+          </div>
+          <div class="description_">
+            <h5>The Lost Decades</h5>
+          </div>
+          <div class="descriptions_">
+            <p>
+              Perhaps the most salient example of the damage caused by not
+              winning the hardware lottery is the delayed recognition of deep
+              neural networks as a promising direction of research. Most of the
+              algorithmic components to make deep neural networks work had
+              already been in place for a few decades: backpropagation (1963
+              <dt-cite key="1963steinbuch"></dt-cite>, reinvented in 1976
+              <dt-cite key="Linnainmaa1976TaylorEO"></dt-cite>, and again in
+              1988 <dt-cite key="1988rumelhart"></dt-cite>), deep convolutional
+              neural networks (1979 <dt-cite key="FUKUSHIMA1982455"></dt-cite>,
+              paired with backpropagation in 1989
+              <dt-cite key="LeCun1989"></dt-cite>). However, it was only three
+              decades later that convolutional neural networks were widely
+              accepted as a promising research direction.
+            </p>
+            <p>
+              This gap between algorithmic advances and empirical success is in
+              large part due to incompatible hardware. During the general
+              purpose computing era, hardware like CPUs were heavily favored and
+              widely available. CPUs are very good at executing any set of
+              complex instructions but often incur high memory costs because of
+              the need to cache intermediate results and process one instruction
+              at a time.
+              <dt-cite key="2018Sato"></dt-cite>. This is known as the von
+              Neumann Bottleneck —  the available compute is restricted by “the
+              lone channel between the cpu and memory along which data has to
+              travel sequentially.”
+              <dt-cite key="1985understandingcomputers"></dt-cite>
+            </p>
+      
+          <div class="content_reduced">
+              <img
+                src="https://cdn.glitch.com/e7ea468b-4014-49eb-aa1b-d0498fa920c7%2F04cac8117a92fa2339b638e14068c3f9.jpg?v=1600386325818"
+                alt="abstract_1"
+                style="width:100%"
+              />
+              <div class="figcaption">
+                <strong_> Many
+              inventions are re-purposed for means unintended by their
+              designers. Edison’s phonograph was never intended to play music.
+              In a similar vein, deep
+              neural networks only began to work when an existing technology was
+              unexpectedly re-purposed.</strong_><br />
+              </div>
+            </div>
+            <p>
+              The von Neumann bottleneck was terribly ill-suited to matrix
+              multiplies, a core component of deep neural network architectures.
+              Thus, training on CPUs quickly exhausted memory bandwidth and it
+              simply wasn’t possible to train deep neural networks with multiple
+              layers. The need for hardware that was massively parallel was
+              pointed out as far back as the early 1980s in a series of essays
+              titled “Parallel Models of Associative Memory.”<dt-cite
+                key="Hinton1989"
+              ></dt-cite>
+              The essays argued persuasively that biological evidence suggested
+              massive parallelism was needed to make deep neural network
+              approaches work<dt-cite key="rumelhart1987"></dt-cite>.
+            </p>
+
+            <p>
+              In the late 1980s/90s, the idea of specialized hardware for neural
+              networks had passed the novelty stage
+              <dt-cite key="MISRA2010239,Lindsey1994,jeff1990"></dt-cite>.
+              However, efforts remained fractured by lack of shared software and
+              the cost of hardware development. Most of the attempts that were
+              actually operationalized like the Connection Machine (1985)
+              <dt-cite key="1995thinkingmachines"></dt-cite>, Space (1992)
+              <dt-cite key="Howe1994"></dt-cite>, the Ring Array Processor
+              (1989) <dt-cite key="MORGAN1992248"></dt-cite> and the Japanese
+              5th generation computer project
+              <dt-cite key="morgan1983"></dt-cite>
+              were designed to favor logic programming such as PROLOG and LISP
+              that were poorly suited to connectionist deep neural networks.
+              Later iterations such as HipNet-1
+              <dt-cite key="kingsburyhipnet"></dt-cite>, and the Analog Neural
+              Network Chip (1991) <dt-cite key="Sackinger129422"></dt-cite>
+              were promising but like prior efforts centered on symbolic
+              reasoning. These efforts were short lived because of the
+              intolerable cost of iteration and the need for custom silicon.
+              Without a consumer market, there was simply not the critical mass
+              in end users to be financially viable.
+            </p>
+
+            <p>
+              It would take a hardware fluke in the early 2000s, a full four
+              decades after the first paper about backpropagation was published,
+              for the insight about massive parallelism to be operationalized in
+              a useful way for connectionist deep neural networks. Many
+              inventions are re-purposed for means unintended by their
+              designers. Edison’s phonograph was never intended to play music.
+              He envisioned it as preserving the last w ords of dying people or
+              teaching spelling. In fact, he was disappointed by its use playing
+              popular music as he thought this was too “base” an application of
+              his invention
+              <dt-cite key="diamond98"></dt-cite>. In a similar vein, deep
+              neural networks only began to work when an existing technology was
+              unexpectedly re-purposed.
+            </p>
+      
+
+            <p>
+              A graphical processing unit (GPU) was originally introduced in the
+              1970s as a specialized accelerator for video games and developing
+              graphics for movies and animation. In the 2000s, like Edison’s
+              phonograph, GPUs were re-purposed for an entirely unimagined use
+              case, to train deep neural networks
+              <dt-cite
+                key="Chellapilla2006,OH20041311kyoung,claudiu2010,Fatahalian2004,Payne2005"
+              ></dt-cite
+              >. GPUs had one critical advantage over CPUs - they were far
+              better at parallelizing a set of simple decomposable instructions
+              such as matrix multiples
+              <dt-cite key="BRODTKORB20134,Dettmers2020"></dt-cite>.
+            </p>
+
+            <p>
+              This higher number of floating operation points per second (FLOPS)
+              combined with clever distribution of training between GPUs
+              unblocked the training of deeper networks. The number of layers in
+              a network turned out to be the key. Performance on ImageNet jumped
+              with ever deeper networks in 2011
+              <dt-cite key="ciresan2011"></dt-cite>, 2012
+              <dt-cite key="NIPS2012_4824"></dt-cite> and 2015
+              <dt-cite key="7298594"></dt-cite>. A striking example of this leap
+              in efficiency is a comparison of the now famous 2012 Google paper
+              which used 16,000 CPU cores to classify cats
+              <dt-cite key="quoc2012"></dt-cite> to a paper published a mere
+              year later that solved the same task with only two CPU cores and
+              four GPUs <dt-cite key="coates13"></dt-cite>.
+            </p>
+          </div>
+          <div class="descriptions_">
+            <h5>Software Lotteries</h5>
+          </div>
+          <div class="descriptions_">
+            <p>
+              Software also plays a role in deciding which research ideas win
+              and lose. Prolog and LISP were two languages heavily favored until
+              the mid-90’s in the AI community. For most of this period,
+              students of AI were expected to actively master one or both of
+              these languages <dt-cite key="lucas1991"></dt-cite>. LISP and
+              Prolog were particularly well suited to handling logic
+              expressions, which were a core component of reasoning and expert
+              systems.
+            </p>
+        <div class="content_reduced">
+              <img
+                src="https://cdn.glitch.com/e7ea468b-4014-49eb-aa1b-d0498fa920c7%2Fbyte_lisp.jpg?v=1587489227920"
+                alt="abstract_1"
+                style="width:70%"
+              />
+              <div class="figcaption">
+                <strong_
+                  >Byte magazine cover, August 1979, volume 4. LISP was the
+                  dominant language for artificial intelligence research through
+                  the 1990's. LISP was particularly well suited to handling
+                  logic expressions, which were a core component of reasoning
+                  and expert systems.</strong_
+                ><br />
+              </div>
+            </div>
+            <p>
+              For researchers who wanted to work on connectionist ideas like
+              deep neural networks there was not a clearly suited language of
+              choice until the emergence of Matlab in 1992
+              <dt-cite key="Demuth93neuralnetwork"></dt-cite>. Implementing
+              connectionist networks in LISP or Prolog was cumbersome and most
+              researchers worked in low level languages like c++
+              <dt-cite key="lispcode"></dt-cite>. It was only in the 2000’s that
+              there started to be a more healthy ecosystem around software
+              developed for deep neural network approaches with the emergence of
+              LUSH <dt-cite key="lush2002"></dt-cite> and subsequently TORCH
+              <dt-cite key="Torch2002"></dt-cite>.
+            </p>
+
+            <p>
+              Where there is a loser, there is also a winner. From the 1960s
+              through the mid 80s, most mainstream research was focused on
+              symbolic approaches to AI  <dt-cite key="Haugeland"></dt-cite>. Unlike deep neural
+              networks where learning an adequate representation is delegated to
+              the model itself, symbolic approaches aimed to build up a
+              knowledge base and use decision rules to replicate how humans
+              would approach a problem. This was often codified as a sequence of
+              logic what-if statements that were well suited to LISP and PROLOG.
+           The widespread and sustained popularity of research on symbolic approaches to AI cannot be seen as
+              independent of how readily it fit into existing programming and
+              hardware frameworks.
+            </p>
+    
+          </div>
+          <div class="descriptions_">
+            <h3>The Persistence of the Hardware Lottery</h3>
+          </div>
+          <div class="descriptions_">
+            <p>
+              Today, there is renewed interest in joint collaboration between
+              hardware, software and machine learning communities. We are
+              experiencing a second pendulum swing back to specialized hardware.
+              The catalysts include changing hardware economics prompted by the
+              end of Moore’s law and the breakdown of dennard scaling<dt-cite
+                key="Hennessy2019"
+              ></dt-cite
+              >, a “bigger is better” race in the number of model parameters
+              that has gripped the field of machine learning
+              <dt-cite key="2018Amodei"></dt-cite>, spiralling energy costs
+              <dt-cite key="2014Horowitz,strubell2019energy"></dt-cite> and the
+              dizzying requirements of deploying machine learning to edge
+              devices <dt-cite key="warden2019tinyml"></dt-cite>.
+            </p>
+
+            <p>
+              The end of Moore’s law means we are not guaranteed more compute,
+              hardware will have to earn it. To improve efficiency, there is a
+              shift from task agnostic hardware like CPUs to domain specialized
+              hardware that tailor the design to make certain tasks more
+              efficient. The first examples of domain specialized hardware
+              released over the last few years -- TPUs
+              <dt-cite key="Jouppi2017"></dt-cite>, edge-TPUs
+              <dt-cite key="2019EdgeTpu"></dt-cite>, Arm Cortex-M55
+              <dt-cite key="2020cortexm"></dt-cite>, Facebook's big sur
+              <dt-cite key="Lee2018"></dt-cite> -- optimize explicitly for
+              costly operations common to deep neural networks like matrix
+              multiplies.
+            </p>
+
+            <p>
+              Closer collaboration between hardware and research communities
+              will undoubtedly continue to make the training and deployment of
+              deep neural networks more efficient. For example, unstructured
+              pruning
+              <dt-cite
+                key="hooker2019,gale2019state,2019arXiv191111134E"
+              ></dt-cite>
+              and weight specific quantization
+              <dt-cite key="Dong2019"></dt-cite> are very successful compression
+              techniques in deep neural networks but are incompatible with
+              current hardware and compilations kernels.
+            </p>
+
+            <p>
+              While these compression techniques are currently not supported,
+              many clever hardware architects are currently thinking about how
+              to solve for this. It is a reasonable prediction that the next few
+              generations of chips or specialized kernels will correct for
+              present hardware bias against these techniques
+              <dt-cite key="Wang2018HAQHA,2020sun"></dt-cite>. Some of the first
+              designs which facilitate sparsity have already hit the market
+              <dt-cite key="nvidia2020"></dt-cite>. In parallel, there is
+              interesting research developing specialized software kernels to
+              support unstructured sparsity
+              <dt-cite
+                key="Elsen_2020_CVPR,2020arXiv200610901G,Gray2017GPUKF"
+              ></dt-cite
+              >.
+            </p>
+            <p>
+              In many ways, hardware is catching up to the present state of
+              machine learning research. Hardware is only economically viable if
+              the lifetime of the use case lasts more than three years
+              <dt-cite key="Dean202011TD"></dt-cite> Betting on ideas which have
+              longevity is a key consideration for hardware developers. Thus,
+              co-design effort has focused almost entirely on optimizing an
+              older generation of models with known commercial use cases. For
+              example, matrix multiplies are a safe target to optimize for
+              because they are here to stay — anchored by the widespread use and
+              adoption of deep neural networks in production systems. Allowing
+              for unstructured sparsity and weight specific quantization are
+              also safe targets because there is wide consensus that these will
+              enable higher levels of compression.
+            </p>
+
+            <p>
+              There is still a separate question of whether hardware innovation
+              is versatile enough to unlock or keep pace with entirely new
+              machine learning research directions. It is difficult to answer
+              this question because data points here are limited -- it is hard
+              to model the counterfactual of would this idea succeed given
+              different hardware. However, despite the inherent challenge of
+              this task, there is already compelling evidence that domain
+              specialized hardware makes it more costly for research ideas that
+              stray outside of the mainstream to succeed.
+            </p>
+
+            <p>
+              In 2019, a paper was published called “Machine learning is stuck
+              in a rut.” <dt-cite key="Barham2019"></dt-cite> The authors
+              consider the difficulty of training a new type of computer vision
+              architecture called capsule networks on domain specialized
+              hardware <dt-cite key="NIPS2017_6975"></dt-cite>. Capsule networks
+              include novel components like squashing operations and routing by
+              agreement. These architecture choices aimed to solve for key
+              deficiencies in convolutional neural networks (lack of rotational
+              invariance and spatial hierarchy understanding) but strayed from
+              the typical architecture of neural networks as a sequence of
+              matrix multiplies. As a result, while capsule networks operations
+              can be implemented reasonably well on CPUs, performance falls off
+              a cliff on accelerators like GPUs and TPUs which have been overly
+              optimized for matrix multiplies.
+            </p>
+
+            <p>
+              Whether or not you agree that capsule networks are the future of
+              computer vision, the authors say something interesting about the
+              difficulty of trying to train a new type of image classification
+              architecture on domain specialized hardware. Hardware design has
+              prioritized delivering on commercial use cases, while built-in
+              flexibility to accommodate the next generation of research ideas
+              remains a distant secondary consideration.
+            </p>
+            <p>
+              While specialization makes deep neural networks more efficient, it
+              also makes it far more costly to stray from accepted building
+              blocks. It prompts the question of how much researchers will
+              implicitly overfit to ideas that operationalize well on available
+              hardware rather than take a risk on ideas that are not currently
+              feasible? What are the failures we still don’t have the hardware
+              to see as a success?
+            </p>
+          </div>
+          <div class="descriptions_">
+            <h3>The Likelyhood of Future Hardware Lotteries</h3>
+          </div>
+          <div class="notepaper">
+            <figure class="quote-by">
+              <blockquote class="quote-by">
+                What we have before us are some breathtaking opportunities
+                disguised as insoluble problems.
+              </blockquote>
+              <figcaption class="quote-by">— John Gardner, 1965</figcaption>
+            </figure>
+          </div>
+          <div class="descriptions_">
+            <p>
+              It is an ongoing, open debate within the machine learning
+              community as to how much future algorithms will stray from models
+              like deep neural networks
+              <dt-cite key="thebitterlesson2019,welling2019"></dt-cite>. The
+              risk you attach to depending on domain specialized hardware is
+              tied to your position on this debate.
+            </p>
+
+            <p>
+              Betting heavily on specialized hardware makes sense if you think
+              that future breakthroughs depend upon pairing deep neural networks
+              with ever increasing amounts of data and computation. Several
+              major research labs are making this bet, engaging in a “bigger is
+              better” race in the number of model parameters and collecting ever
+              more expansive datasets. However, it is unclear whether this is
+              sustainable. An algorithms scalability is often thought of as the
+              performance gradient relative to the available resources. Given
+              more resources, how does performance increase?
+            </p>
+
+            <p>
+              For many subfields, we are now in a regime where the rate of
+              return for additional parameters is decreasing
+              <dt-cite key="2020Thompson,2020brown"></dt-cite>. For example,
+              while the parameters almost double between Inception V3
+              <dt-cite key="2016Szegedy"></dt-cite> and Inception V4 architectures
+              <dt-cite key="2015szegedy"></dt-cite>, (from 21.8 to 41.1
+              million parameters), accuracy on ImageNet differs by less than 2%
+              between the two networks (78.8 vs 80 %)
+              <dt-cite key="kornblith2018"></dt-cite>. The cost of throwing
+              additional parameters at a problem is becoming painfully obvious.
+              The training of GPT-3 alone is estimated to exceed 12 million
+              dollars <dt-cite key="wigger2020"></dt-cite>.
+            </p>
+
+            <p>
+              Perhaps more troubling is how far away we are from the type of
+              intelligence humans demonstrate. Human brains despite their
+              complexity remain extremely energy efficient. Our brain has over
+              85 billion neurons but runs on the energy equivalent of an
+              electric shaver<dt-cite key="2017neurons"></dt-cite>. While deep
+              neural networks may be scalable, it may be prohibitively expensive
+              to do so in a regime of comparable intelligence to humans. An apt
+              metaphor is that we appear to be trying to build a ladder to the
+              moon.
+            </p>
+
+            <p>
+              Biological examples of intelligence differ from deep neural
+              networks in enough ways to suggest it is a risky bet to say that
+              deep neural networks are the only way forward. While general
+              purpose algorithms like deep neural networks rely on global
+              updates in order to learn a useful representation, our brains do
+              not. Our own intelligence relies on decentralized local updates
+              which surface a global signal in ways that are not well understood
+              <dt-cite key="LILLICRAP201982,Marblestone2016,Bi10464"></dt-cite>.
+            </p>
+
+            <p>
+              In addition, our brains are able to learn efficient
+              representations from far fewer labelled examples than deep neural
+              networks <dt-cite key="Zador2019ACO"></dt-cite>. For typical deep
+              learning models the entire model is activated for every example
+              which leads to a quadratic blow-up in training costs. In contrast,
+              evidence suggests that the brain does not perform a full forward
+              and backward pass for all inputs. Instead, the brain simulates
+              what inputs are expected against incoming sensory data. Based upon
+              the certainty of the match, the brain simply infills. What we see
+              is largely virtual reality computed from memory
+              <dt-cite key="Eagleman2036,bubic2010,Heeger1773"></dt-cite>.
+            </p>
+
+            <div class="content_reduced">
+              <img
+                src="https://cdn.glitch.com/e7ea468b-4014-49eb-aa1b-d0498fa920c7%2Freading_walking.jpg?v=1600382471421"
+                alt="abstract_1"
+                style="width:100%"/>
+              <div class="figcaption">
+                <strong_
+                  >Human latency for certain tasks suggests we have specialized pathways for different stimuli. For example, it is easy for a human to walk and talk at the same time. However, it is far more cognitively taxing to attempt to read and walk. </strong_
+                ><br />
+              </div>
+            </div>
+
+            <p>
+              Humans have highly optimized and specific pathways developed in
+              our biological hardware for different tasks <dt-cite key="Kennedy2000SignalprocessingMA,von2000computer"></dt-cite>.
+              For example, it is easy for a human to walk and talk at the
+              same time. However, it is far more cognitively taxing to attempt
+              to read and talk <dt-cite key="Stroop1935"></dt-cite>. This
+              suggests the way a network is organized and our inductive biases
+              is as important as the overall size of the network
+              <dt-cite
+                key="HerculanoHouzel2014TheEB,inductive_biases,spelke2007"
+              ></dt-cite
+              >. Our brains are able to fine-tune and retain humans skills
+              across our lifetimes
+              <dt-cite
+                key="benna2016,bremner2013,stein2004handbook,tani2016exploring,Gallistel2009,Tulving2002,Barnett2002WhenAW"
+              ></dt-cite
+              >. In contrast, deep neural networks that are trained upon new
+              data often evidence catastrophic forgetting, where performance
+              deteriorates on the original task because the new information
+              interferes with previously learned behavior
+              <dt-cite
+                key="Mcclelland1995,MCCLOSKEY1989109,2018Parisi"
+              ></dt-cite
+              >.
+            </p>
+
+            <p>
+              The point of these examples is not to convince you that deep
+              neural networks are not the way forward. But, rather that there
+              are clearly other models of intelligence which suggest it may not
+              be the only way. It is possible that the next breakthrough will
+              require a fundamentally different way of modelling the world with
+              a different combination of hardware, software and algorithm. We
+              may very well be in the midst of a present day hardware lottery.
+            </p>
+
+            <div class="content_reduced">
+              <img
+                src="https://cdn.glitch.com/e7ea468b-4014-49eb-aa1b-d0498fa920c7%2FScreen%20Shot%202020-07-18%20at%201.01.10%20PM.png?v=1595102505573"
+                alt="abstract_1"
+                style="width:100%"
+              />
+              <div class="figcaption">
+                <strong_>The Brains of Men and Machines</strong_><br />
+              </div>
+            </div>
+
+            <div class="descriptions_">
+              <h3>The Way Forward</h3>
+            </div>
+
+            <div class="notepaper">
+              <figure class="quote-by">
+                <blockquote class="quote-by">
+                  Any machine coding system should be judged quite largely from
+                  the point of view of how easy it is for the operator to obtain
+                  results.
+                </blockquote>
+                <figcaption class="quote-by">— John Mauchly, 1973</figcaption>
+              </figure>
+            </div>
+            <div class="descriptions_">
+              <p>
+                Scientific progress occurs when there is a confluence of factors
+                which allows the scientist to overcome the "stickyness" of the
+                existing paradigm. The speed at which paradigm shifts have
+                happened in AI research have been disproportionately determined
+                by the degree of alignment between hardware, software and
+                algorithm. Thus, any attempt to avoid hardware lotteries must be
+                concerned with making it cheaper and less time-consuming to
+                explore different hardware-software-algorithm combinations.
+              </p>
+
+              <p>
+                This is easier said than done. Expanding the search space of
+                possible hardware-software-algorithm combinations is a
+                formidable goal. It is expensive to explore new types of
+                hardware, both in terms of time and capital required. Producing
+                a next generation chip typically costs $30-$80 million dollars
+                and 2-3 years to develop <dt-cite key="2019Feldman"></dt-cite>.
+                The fixed costs alone of building a manufacturing plant are
+                enormous; estimated at $7 billion dollars in 2017
+                <dt-cite key="Thompson2018TheDO"></dt-cite>.
+              </p>
+
+              <p>
+                Experiments using reinforcement learning to optimize chip
+                placement may help decrease cost
+                <dt-cite key="2020Mirhoseini"></dt-cite>. There is also renewed
+                interest in re-configurable hardware such as field program gate
+                array (FPGAs) <dt-cite key="Hauck2007"></dt-cite> and
+                coarse-grained reconfigurable arrays (CGRAs)
+                <dt-cite key="8192487"></dt-cite>. These devices allow the chip
+                logic to be re-configured to avoid being locked into a single
+                use case. However, the trade-off for flexibility is far higher
+                FLOPS and the need for tailored software development. Coding
+                even simple algorithms on FPGAs remains very painful and time
+                consuming <dt-cite key="Shalf2020TheFO"></dt-cite>.
+              </p>
+              <p>
+                In the short to medium term hardware development is likely to
+                remain expensive and prolonged. The cost of producing hardware
+                is important because it determines the amount of risk and
+                experimentation hardware developers are willing to tolerate.
+                Investment in hardware tailored to deep neural networks is
+                assured because neural networks are a cornerstone of enough
+                commercial use cases. The widespread profitability of deep
+                learning has spurred a healthy ecosystem of hardware startups
+                that aim to further accelerate deep neural networks
+                <dt-cite key="Cade2018"></dt-cite> and has encouraged large
+                companies to develop custom hardware in-house
+                <dt-cite key="7866802,Jouppi2017,Lee2018"></dt-cite>.
+              </p>
+
+              <p>
+                The bottleneck will continue to be funding hardware for use
+                cases that are not immediately commercially viable. These more
+                risky directions include biological hardware
+                <dt-cite key="macia2014,tan2007,Kriegman1853"></dt-cite>, analog
+                hardware with in-memory computation
+                <dt-cite key="ambrogio2018"></dt-cite>, neuromorphic computing
+                <dt-cite key="8741810"></dt-cite>, optical computing
+                <dt-cite key="Lin1004"></dt-cite>, and quantum computing based
+                approaches <dt-cite key="2019cross"></dt-cite>. There are also
+                high risk efforts to explore the development of transistors
+                using new materials
+                <dt-cite key="Colwell2013,6527325"></dt-cite>.
+              </p>
+
+              <p>
+                Lessons from previous hardware lotteries suggest that investment
+                must be sustained and come from both private and public funding
+                programs. There is a slow awakening of public interest in
+                providing such dedicated resources, such as the 2018 DARPA
+                Electronics Resurgence Initiative which has committed to $1.5
+                billion dollars in funding for microelectronic technology
+                research <dt-cite key="DARPA018"></dt-cite>. China has also
+                announced a $47 billion dollar fund to support semiconductor
+                research <dt-cite key="Kubota2018"></dt-cite>. However, even
+                investment of this magnitude may still be woefully inadequate,
+                as hardware based on new materials requires long lead times of
+                10-20 years and public investment is currently far below
+                industry levels of R&D <dt-cite key="Shalf2020TheFO"></dt-cite>.
+              </p>
+
+              <div class="description_">
+                <h5>The Software Revolution</h5>
+              </div>
+              <div class="descriptions_">
+                <p>
+                  An interim goal is to provide better feedback loops to
+                  researchers about how our algorithms interact with the
+                  hardware we do have. Machine learning researchers do not spend
+                  much time talking about how hardware chooses which ideas
+                  succeed and which fail. This is primarily because it is hard
+                  to quantify the cost of being concerned. At present, there are
+                  no easy and cheap to use interfaces to benchmark algorithm
+                  performance against multiple types of hardware at once. There
+                  are frustrating differences in the subset of software
+                  operations supported on different types of hardware which
+                  prevent the portability of algorithms across hardware types
+                  <dt-cite key="HotelSoftwarePF"></dt-cite>. Software kernels
+                  are often overly optimized for a specific type of hardware
+                  which causes large discrepancies in efficiency when used with different
+                  hardware <dt-cite key="Hennessy2019"></dt-cite>.
+                </p>
+                <p>
+                  These challenges are compounded by an ever more formidable and
+                  heterogeneous hardware landscape
+                  <dt-cite key="Reddi2020,7459430"></dt-cite>. As the hardware
+                  landscape becomes increasingly fragmented and specialized,
+                  fast and efficient code will require ever more niche and
+                  specialized skills to write <dt-cite key="Lee2011"></dt-cite>.
+                  This means that there will be increasingly uneven gains from
+                  progress in computer science research. While some types of
+                  hardware will benefit from a healthy software ecosystem,
+                  progress on other languages will be sporadic and often stymied
+                  by a lack of critical end users
+                  <dt-cite key="Thompson2018TheDO,Leisersoneaam9744"></dt-cite>.
+                </p>
+                <p>
+                  One way to mitigate this need for specialized software
+                  expertise is focusing on the development of domain-specific
+                  languages which are designed to focus on a narrow domain.
+                  While you give up expressive power, domain-specific languages
+                  permit greater portability across different types of hardware.
+                  It allow developers to focus on the intent of the code without
+                  worrying about implementation details
+                  <dt-cite key="Olukotun2014,Mernik2005,Cong2011"></dt-cite>.
+                  Another promising direction is automatically auto-tuning the
+                  algorithmic parameters of a program based upon the downstream
+                  choice of hardware. This facilitates easier deployment by
+                  tailoring the program to achieve good performance and load
+                  balancing on a variety of hardware
+                  <dt-cite
+                    key="8476161,CLINTWHALEY20013,Asanovic2006,Ansel2014"
+                  ></dt-cite
+                  >.
+                </p>
+
+                <p>
+                  The difficulty of both these approaches is that if successful,
+                  this further abstracts humans from the details of the
+                  implementation. In parallel, we need better profiling tools to
+                  allow researchers to have a more informed opinion about how
+                  hardware and software should evolve. Ideally, software could
+                  even surface recommendations about what type of hardware to
+                  use given the configuration of an algorithm. Registering what
+                  differs from our expectations remains a key catalyst in
+                  driving new scientific discoveries.
+                </p>
+
+                <p>
+                  Software needs to do more work, but it is also well positioned
+                  to do so. We have neglected efficient software throughout the
+                  era of Moore's law, trusting that predictable gains in compute
+                  would compensate for inefficiencies in the software stack.
+                  This means there are many low hanging fruit as we begin to
+                  optimize for more efficient code
+                  <dt-cite key="larus2008spending,Xu2010"></dt-cite>.
+                </p>
+              </div>
+
+              <div class="descriptions_">
+                <h3>Parting Thoughts</h3>
+              </div>
+
+              <p>
+                George Gilder, an American investor, described the
+                computer chip as “inscribing worlds on grains of sand”
+                <dt-cite key="gilder2000telecosm"></dt-cite>. The performance of
+                an algorithm is fundamentally intertwined with the hardware and
+                software it runs on. This essay proposes the term hardware
+                lottery to describe how these downstream choices determine
+                whether a research idea succeeds or fails. Examples from early
+                computer science history illustrate how hardware lotteries can
+                delay research progress by casting successful ideas as failures.
+                These lessons are particularly salient given the advent of
+                domain specialized hardware which makes it increasingly costly
+                to stray off of the beaten path of research ideas. This essay
+                posits that the gains from progress in computing are likely to
+                become even more uneven, with certain research directions moving
+                into the fast-lane while progress on others is further
+                obstructed.
+              </p>
+            </div>
+            <link
+              rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css"
+            />
+            <script src="template.v1.js"></script>
+            <dt-appendix>
+              <div class="description_">
+                <h3>About the Author</h3>
+                <p>
+                  Sara Hooker is researcher at Google Brain working on training
+                  models that fulfill multiple desired criteria -- high
+                  performance, interpretable, compact and robust. 
+                  She is interested in the intersections between hardware,
+                  software and algorithms.
+                </p>
+                <h3>Acknowledgments</h3>
+                <p>
+                  Thank you to my wonderful colleagues and peers who took the
+                  time to provide valuable feedback on earlier drafts of this
+                  essay. In particular, we would like to acknowledge the
+                  valuable input of Utku Evci, Amanda Su, Chip Huyen, Eric Jang,
+                  Simon Kornblith, Melissa Fabros, Erich Elsen, Sean Mcpherson,
+                  Brian Spiering, Stephanie Sher, Pete Warden, Samy Bengio, Jacques Pienaar,
+                  Raziel Alvarez, Laura Florescu, Cliff Young, Dan Hurt, Kevin
+                  Swersky, Carles Gelada. Thanks for the institutional support
+                  and encouragement of Natacha Mainville and Alexander Popper.
+                </p>
+
+                <h3>Citation</h3>
+                <pre class="citation long">
+            @inproceedings{Hooker2020TheHL,
+            title={The Hardware Lottery},
+            url={https://arxiv.org/abs/2009.06489},
+            author={Sara Hooker},
+            year={2020}}        
+              </pre
+                >
+              </div>
+            </dt-appendix>
+          </div>
+        </div>
+
+        <script type="text/bibliography">
+        
+        
+@book{posselt1888jacquard,
+  title={The Jacquard Machine Analyzed and Explained: The Preparation of Jacquard Cards and Practical Hints to Learners of Jacquard Designing},
+  author={Posselt, E.A.},
+  series={Posselt's textile library},
+  url={https://books.google.com/books?id=-6FtmgEACAAJ},
+  year={1888},
+  publisher={E.A. Posselt}
+}
+
+@ARTICLE{hooker2019selective,
+author = {{Hooker}, Sara and {Courville}, Aaron and {Clark}, Gregory and
+{Dauphin}, Yann and {Frome}, Andrea},
+title = "{What Do Compressed Deep Neural Networks Forget?}",
+url = {https://arxiv.org/abs/1911.05248},
+}
+
+@ARTICLE{2019arXiv191111134E,
+author = {{Evci}, Utku and {Gale}, Trevor and {Menick}, Jacob and
+{Castro}, Pablo Samuel and {Elsen}, Erich},
+title = "{Rigging the Lottery: Making All Tickets Winners}",
+journal = {arXiv e-prints},
+keywords = {Computer Science - Machine Learning, Computer Science - Computer Vision and Pattern Recognition, Statistics - Machine Learning},
+year = 2019,
+month = nov,
+}
+
+
+@book{stein2004handbook,
+            title={The Handbook of Multisensory Processes},
+            author={Stein, G.C.C.S.B.E. and Calvert, G. and Spence, C. and Spence, D.E.P.C. and Stein, B.E. and Stein, P.C.B.E.},
+            isbn={9780262033213},
+            lccn={2004042612},
+            series={A Bradford book},
+            url={https://books.google.com/books?id=CZS\_yDoFV7AC},
+            year={2004},
+            publisher={MIT Press}
+          }
+
+                @book{tani2016exploring,
+            title={Exploring Robotic Minds: Actions, Symbols, and Consciousness as Self-organizing Dynamic Phenomena},
+            author={Tani, J. and Oxford University Press},
+            isbn={9780190281083},
+            lccn={2016014889},
+            series={Oxford series on cognitive models and architectures},
+            url={https://books.google.com/books?id=QswnnQAACAAJ},
+            year={2016},
+            publisher={Oxford University Press}
+          }
+
+          @article{Barnett2002WhenAW,
+            title={When and where do we apply what we learn? A taxonomy for far transfer.},
+            author={Susan M. Barnett and S. Ceci},
+            journal={Psychological bulletin},
+            year={2002},
+            volume={128 4},
+            pages={
+                    612-37
+                  }
+          }
+          
+          @misc{HotelSoftwarePF,
+  title={Software Productivity for Extreme-Scale Science},
+  author={H. Hotel and H. Johansen and D. Bernholdt and M. H{\'e}roux and R. Hornung},
+  year={2014}
+}
+
+                @misc{Xu2010,
+          author = {Xu, Harry and Mitchell, Nick and Arnold, Matthew and Rountev, Atanas and Sevitsky, Gary},
+          year = {2010},
+          month = {01},
+          pages = {421-426},
+          title = {Software bloat analysis: Finding, removing, and preventing performance problems in modern large-scale object-oriented applications},
+          journal = {Proceedings of the FSE/SDP Workshop on the Future of Software Engineering Research, FoSER 2010},
+          doi = {10.1145/1882362.1882448}
+          }
+
+          @inproceedings{Ansel2014,
+          author = {Ansel, Jason and Kamil, Shoaib and Veeramachaneni, Kalyan and Ragan-Kelley, Jonathan and Bosboom, Jeffrey and O'Reilly, Una-May and Amarasinghe, Saman},
+          title = {OpenTuner: An Extensible Framework for Program Autotuning},
+          year = {2014},
+          isbn = {9781450328098},
+          publisher = {Association for Computing Machinery},
+          address = {New York, NY, USA},
+          url = {https://doi.org/10.1145/2628071.2628092},
+          doi = {10.1145/2628071.2628092},
+          booktitle = {Proceedings of the 23rd International Conference on Parallel Architectures and Compilation},
+          pages = {303–316},
+          numpages = {14},
+          keywords = {optimization, autotuner},
+          location = {Edmonton, AB, Canada},
+          series = {PACT '14}
+          }
+
+
+                @techreport{Asanovic2006,
+              Author = {Asanović, Krste and Bodik, Ras and Catanzaro, Bryan Christopher and Gebis, Joseph James and Husbands, Parry and Keutzer, Kurt and Patterson, David A. and Plishker, William Lester and Shalf, John and Williams, Samuel Webb and Yelick, Katherine A.},
+              Title = {The Landscape of Parallel Computing Research: A View from Berkeley},
+              Institution = {EECS Department, University of California, Berkeley},
+              Year = {2006},
+              Month = {Dec},
+              URL = {http://www2.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-183.html},
+              Number = {UCB/EECS-2006-183},
+          }
+
+          @article{Tulving2002,
+          author = {Tulving, Endel},
+          title = {Episodic Memory: From Mind to Brain},
+          journal = {Annual Review of Psychology},
+          volume = {53},
+          number = {1},
+          pages = {1-25},
+          year = {2002},
+          doi = {10.1146/annurev.psych.53.100901.135114},
+              note ={PMID: 11752477},
+
+          URL = {
+                  https://doi.org/10.1146/annurev.psych.53.100901.135114
+
+          },
+          eprint = {
+                  https://doi.org/10.1146/annurev.psych.53.100901.135114
+
+          }
+          ,
+          }
+
+
+          @article{larus2008spending,
+          author = {Larus, James},
+          title = {Spending Moore's Dividend},
+          year = {2009},
+          issue_date = {May 2009},
+          publisher = {Association for Computing Machinery},
+          address = {New York, NY, USA},
+          volume = {52},
+          number = {5},
+          issn = {0001-0782},
+          url = {https://doi.org/10.1145/1506409.1506425},
+          doi = {10.1145/1506409.1506425},
+          abstract = {Multicore computers shift the burden of software performance from chip designers and processor architects to software developers.},
+          journal = {Commun. ACM},
+          month = may,
+          pages = {62–69},
+          numpages = {8}
+          }
+
+          @misc{bremner2013,
+          author = {Bremner, Andrew and Lewkowicz, David and Spence, Charles},
+          year = {2013},
+          month = {11},
+          pages = {},
+          title = {Multisensory Development},
+          doi = {10.1093/acprof:oso/9780199586059.003.0001}
+          }
+
+
+
+                @article{CLINTWHALEY20013,
+          title = "Automated empirical optimizations of software and the ATLAS project",
+          journal = "Parallel Computing",
+          volume = "27",
+          number = "1",
+          pages = "3 - 35",
+          year = "2001",
+          note = "New Trends in High Performance Computing",
+          issn = "0167-8191",
+          doi = "https://doi.org/10.1016/S0167-8191(00)00087-9",
+          url = "http://www.sciencedirect.com/science/article/pii/S0167819100000879",
+          author = "R. {Clint Whaley} and Antoine Petitet and Jack J. Dongarra",
+          keywords = "ATLAS, BLAS, Portable performance, AEOS",
+          }
+
+
+                @ARTICLE{8476161,
+            author={J. {Dongarra} and M. {Gates} and J. {Kurzak} and P. {Luszczek} and Y. M. {Tsai}},
+            journal={Proceedings of the IEEE},
+            title={Autotuning Numerical Dense Linear Algebra for Batched Computation With GPU Hardware Accelerators},
+            year={2018},
+            volume={106},
+            number={11},
+            pages={2040-2055},}
+
+
+          @misc{Kennedy2000SignalprocessingMA,
+          title={Signal-processing machines at the postsynaptic density.},
+          author={Mary B. Kennedy},
+          journal={Science},
+          year={2000},
+          volume={290 5492},
+          pages={
+          750-4
+          }
+          }
+
+          @misc{Gallistel2009,
+          author = {Gallistel, Charles and King, Adam},
+          year = {2009},
+          month = {04},
+          pages = {288-298},
+          title = {Memory and the Computational Brain: Why Cognitive Science Will Transform Neuroscience},
+          doi = {10.1002/9781444310498.refs}
+          }
+
+
+                @article{Olukotun2014,
+          author = {Olukotun, Kunle},
+          title = {Beyond Parallel Programming with Domain Specific Languages},
+          year = {2014},
+          issue_date = {August 2014},
+          publisher = {Association for Computing Machinery},
+          address = {New York, NY, USA},
+          volume = {49},
+          number = {8},
+          issn = {0362-1340},
+          url = {https://doi.org/10.1145/2692916.2557966},
+          doi = {10.1145/2692916.2557966},
+          journal = {SIGPLAN Not.},
+          month = feb,
+          pages = {179–180},
+          numpages = {2},
+          keywords = {domain specific languages}
+          }
+
+          @article{benna2016,
+          author = {Benna, Marcus and Fusi, Stefano},
+          year = {2016},
+          month = {10},
+          pages = {},
+          title = {Computational principles of synaptic memory consolidation},
+          volume = {19},
+          journal = {Nature Neuroscience},
+          doi = {10.1038/nn.4401}
+          }
+
+
+          @article{Mernik2005,
+          author = {Mernik, Marjan and Heering, Jan and Sloane, Anthony M.},
+          title = {When and How to Develop Domain-Specific Languages},
+          year = {2005},
+          issue_date = {December 2005},
+          publisher = {Association for Computing Machinery},
+          address = {New York, NY, USA},
+          volume = {37},
+          number = {4},
+          issn = {0360-0300},
+          url = {https://doi.org/10.1145/1118890.1118892},
+          doi = {10.1145/1118890.1118892},
+          journal = {ACM Comput. Surv.},
+          month = dec,
+          pages = {316–344},
+          numpages = {29},
+          keywords = {language development system, domain analysis, application language, Domain-specific language}
+          }
+
+
+                @article {Leisersoneaam9744,
+          	author = {Leiserson, Charles E. and Thompson, Neil C. and Emer, Joel S. and Kuszmaul, Bradley C. and Lampson, Butler W. and Sanchez, Daniel and Schardl, Tao B.},
+          	title = {There{\textquoteright}s plenty of room at the Top: What will drive computer performance after Moore{\textquoteright}s law?},
+          	volume = {368},
+          	number = {6495},
+          	elocation-id = {eaam9744},
+          	year = {2020},
+          	doi = {10.1126/science.aam9744},
+          	publisher = {American Association for the Advancement of Science},
+          	issn = {0036-8075},
+          	URL = {https://science.sciencemag.org/content/368/6495/eaam9744},
+          	eprint = {https://science.sciencemag.org/content/368/6495/eaam9744.full.pdf},
+          	journal = {Science}
+          }
+
+                @misc{Thompson2018TheDO,
+            title={The Decline of Computers As a General Purpose Technology: Why Deep Learning and the End of Moore’s Law are Fragmenting Computing},
+            author={Neil Thompson and Svenja Spanuth},
+            year={2018}
+          }
+
+                @misc{DARPA018,
+          title={DARPA Announces Next Phase of Electronics Resurgence Initiative},
+          author={DARPA},
+          year={2018},
+          URL = {https://www.darpa.mil/news-events/2018-11-01a},
+          }
+
+
+                @article{Shalf2020TheFO,
+            title={The future of computing beyond Moore’s Law},
+            author={John Shalf},
+            journal={Philosophical Transactions of the Royal Society A},
+            year={2020},
+            volume={378}
+          }
+
+          @misc{Kubota2018,
+          title={China Plans $47$ Billion Fund to Boost Its Semiconductor Industry},
+          author={Yoko Kubota},
+          year={2018},
+          url = {https://on.wsj.com/32L7Kwn},
+          }
+
+          @INPROCEEDINGS{7459430,
+            author={G. {Fursin} and A. {Lokhmotov} and E. {Plowman}},
+            booktitle={2016 Design, Automation  Test in Europe Conferenc Exhibition (DATE)},
+            title={Collective Knowledge: Towards R D sustainability},
+            year={2016},
+            volume={},
+            number={},
+            pages={864-869},}
+
+            @ARTICLE{Cong2011,
+            author={J. {Cong} and V. {Sarkar} and G. {Reinman} and A. {Bui}},
+            journal={IEEE Design   Test of Computers},
+            title={Customizable Domain-Specific Computing},
+            year={2011},
+            volume={28},
+            number={2},
+            pages={6-15},}
+
+                @book{Hauck2007,
+          author = {Hauck, Scott and DeHon, Andre},
+          title = {Reconfigurable Computing: The Theory and Practice of FPGA-Based Computation},
+          year = {2007},
+          isbn = {9780080556017},
+          publisher = {Morgan Kaufmann Publishers Inc.},
+          address = {San Francisco, CA, USA}}
+          }
+
+          @ARTICLE{7866802,
+            author={B. {Falsafi} and B. {Dally} and D. {Singh} and D. {Chiou} and J. J. {Yi} and R. {Sendag}},
+            journal={IEEE Micro},
+            title={FPGAs versus GPUs in Data centers},
+            year={2017},
+            volume={37},
+            number={1},
+            pages={60-72},}
+
+          @INPROCEEDINGS{8192487,
+            author={R. {Prabhakar} and Y. {Zhang} and D. {Koeplinger} and M. {Feldman} and T. {Zhao} and S. {Hadjis} and A. {Pedram} and C. {Kozyrakis} and K. {Olukotun}},
+            booktitle={2017 ACM/IEEE 44th Annual International Symposium on Computer Architecture (ISCA)},
+            title={Plasticine: A reconfigurable architecture for parallel patterns},
+            year={2017},
+            volume={},
+            number={},
+            pages={389-402},}
+
+            @article{Shalf2020TheFO,
+            title={The future of computing beyond Moore’s Law},
+            author={John Shalf},
+            journal={Philosophical Transactions of the Royal Society A},
+            year={2020},
+            volume={378}
+          }
+
+          @INPROCEEDINGS{Reddi2020,
+            author={V. J. {Reddi} and C. {Cheng} and D. {Kanter} and P. {Mattson} and G. {Schmuelling} and C. {Wu} and B. {Anderson} and M. {Breughe} and M. {Charlebois} and W. {Chou} and R. {Chukka} and C. {Coleman} and S. {Davis} and P. {Deng} and G. {Diamos} and J. {Duke} and D. {Fick} and J. S. {Gardner} and I. {Hubara} and S. {Idgunji} and T. B. {Jablin} and J. {Jiao} and T. S. {John} and P. {Kanwar} and D. {Lee} and J. {Liao} and A. {Lokhmotov} and F. {Massa} and P. {Meng} and P. {Micikevicius} and C. {Osborne} and G. {Pekhimenko} and A. T. R. {Rajan} and D. {Sequeira} and A. {Sirasao} and F. {Sun} and H. {Tang} and M. {Thomson} and F. {Wei} and E. {Wu} and L. {Xu} and K. {Yamada} and B. {Yu} and G. {Yuan} and A. {Zhong} and P. {Zhang} and Y. {Zhou}},
+            booktitle={2020 ACM/IEEE 47th Annual International Symposium on Computer Architecture (ISCA)},
+            title={MLPerf Inference Benchmark},
+            year={2020},
+            volume={},
+            number={},
+            pages={446-459},}
+
+          @misc{von2000computer,
+          title={The Computer and the Brain},
+          author={Von Neumann, J. and Churchland, P.M. and Churchland, P.S.},
+          url={https://books.google.com/books?id=Q30MqJjRv1gC},
+          year={2000},
+          publisher={Yale University Press}
+          }
+
+
+          @ARTICLE{Lee2011,
+            author={H. {Lee} and K. {Brown} and A. {Sujeeth} and H. {Chafi} and T. {Rompf} and M. {Odersky} and K. {Olukotun}},
+            journal={IEEE Micro},
+            title={Implementing Domain-Specific Languages for Heterogeneous Parallel Computing},
+            year={2011},
+            volume={31},
+            number={5},
+            pages={42-53},}
+
+                @ARTICLE{2020Mirhoseini,
+                 author = {{Mirhoseini}, Azalia and {Goldie}, Anna and {Yazgan}, Mustafa and
+                   {Jiang}, Joe and {Songhori}, Ebrahim and {Wang}, Shen and
+                   {Lee}, Young-Joon and {Johnson}, Eric and {Pathak}, Omkar and
+                   {Bae}, Sungmin and {Nazi}, Azade and {Pak}, Jiwoo and {Tong}, Andy and
+                   {Srinivasa}, Kavya and {Hang}, William and {Tuncer}, Emre and
+                   {Babu}, Anand and {Le}, Quoc V. and {Laudon}, James and {Ho}, Richard and
+                   {Carpenter}, Roger and {Dean}, Jeff},
+                  title = "{Chip Placement with Deep Reinforcement Learning}",
+                journal = {arXiv e-prints},
+               keywords = {Computer Science - Machine Learning, Computer Science - Artificial Intelligence},
+                   year = 2020,
+                  month = apr,
+                    eid = {arXiv:2004.10746},
+                  pages = {arXiv:2004.10746},
+          archivePrefix = {arXiv},
+                 eprint = {2004.10746},
+           primaryClass = {cs.LG},
+                 adsurl = {https://ui.adsabs.harvard.edu/abs/2020arXiv200410746M},
+                adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+          }
+
+          @ARTICLE{6527325,
+            author={D. E. {Nikonov} and I. A. {Young}},
+            journal={Proceedings of the IEEE},
+            title={Overview of Beyond-CMOS Devices and a Uniform Methodology for Their Benchmarking},
+            year={2013},
+            volume={101},
+            number={12},
+            pages={2498-2533},}
+
+          @INPROCEEDINGS{Colwell2013,
+            author={R. {Colwell}},
+            booktitle={2013 IEEE Hot Chips 25 Symposium (HCS)},
+            title={The chip design game at the end of Moore's law},
+            year={2013},
+            volume={},
+            number={},
+            pages={1-16},}
+
+              @ARTICLE{2018Parisi,
+                 author = {{Parisi}, German I. and {Kemker}, Ronald and {Part}, Jose L. and
+                   {Kanan}, Christopher and {Wermter}, Stefan},
+                  title = "{Continual Lifelong Learning with Neural Networks: A Review}",
+                journal = {arXiv e-prints},
+               keywords = {Computer Science - Machine Learning, Quantitative Biology - Neurons and Cognition, Statistics - Machine Learning},
+                   year = 2018,
+                  month = feb,
+                    eid = {arXiv:1802.07569},
+                  pages = {arXiv:1802.07569},
+          archivePrefix = {arXiv},
+                 eprint = {1802.07569},
+           primaryClass = {cs.LG},
+                 adsurl = {https://ui.adsabs.harvard.edu/abs/2018arXiv180207569P},
+                adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+          }
+
+          @misc{Cade2018,
+          title={Big Bets on A.I. Open a New Frontier for Chip Start-Ups, Too},
+          author={Cade Metz},
+          year={2018},
+          url = {https://www.nytimes.com/2018/01/14/technology/artificial-intelligence-chip-start-ups.html},
+
+          }
+
+          @article{inductive_biases,
+          author    = {Peter W. Battaglia and
+          Jessica B. Hamrick and
+          Victor Bapst and
+          Alvaro Sanchez{-}Gonzalez and
+          Vin{\'{\i}}cius Flores Zambaldi and
+          Mateusz Malinowski and
+          Andrea Tacchetti and
+          David Raposo and
+          Adam Santoro and
+          Ryan Faulkner and
+          {\c{C}}aglar G{\"{u}}l{\c{c}}ehre and
+          H. Francis Song and
+          Andrew J. Ballard and
+          Justin Gilmer and
+          George E. Dahl and
+          Ashish Vaswani and
+          Kelsey R. Allen and
+          Charles Nash and
+          Victoria Langston and
+          Chris Dyer and
+          Nicolas Heess and
+          Daan Wierstra and
+          Pushmeet Kohli and
+          Matthew Botvinick and
+          Oriol Vinyals and
+          Yujia Li and
+          Razvan Pascanu},
+          title     = {Relational inductive biases, deep learning, and graph networks},
+          journal   = {CoRR},
+          volume    = {abs/1806.01261},
+          year      = {2018},
+          url       = {http://arxiv.org/abs/1806.01261},
+          archivePrefix = {arXiv},
+          eprint    = {1806.01261},
+          timestamp = {Wed, 24 Jul 2019 18:56:21 +0200},
+          biburl    = {https://dblp.org/rec/journals/corr/abs-1806-01261.bib},
+          bibsource = {dblp computer science bibliography, https://dblp.org}
+          }
+
+          @article{Mcclelland1995,
+          author = {Mcclelland, James and Mcnaughton, Bruce and O’Reilly, Randall},
+          year = {1995},
+          month = {08},
+          pages = {419-57},
+          title = {Why There are Complementary Learning Systems in the Hippocampus and Neocortex: Insights from the Successes and Failures of Connectionist Models of Learning and Memory},
+          volume = {102},
+          journal = {Psychological review},
+          doi = {10.1037/0033-295X.102.3.419}
+          }
+
+          @misc{Thompson2018TheDO,
+            title={The Decline of Computers As a General Purpose Technology: Why Deep Learning and the End of Moore’s Law are Fragmenting Computing},
+            author={Neil Thompson and Svenja Spanuth},
+            year={2018}
+          }
+
+
+
+
+                @ARTICLE{claudiu2010,
+          author = {{Claudiu Ciresan}, Dan and {Meier}, Ueli and {Gambardella}, Luca Maria and
+          {Schmidhuber}, Juergen},
+          title = "{Deep Big Simple Neural Nets Excel on Handwritten Digit Recognition}",
+          journal = {arXiv e-prints},
+          keywords = {Computer Science - Neural and Evolutionary Computing, Computer Science - Artificial Intelligence},
+          year = 2010,
+          month = mar,
+          eid = {arXiv:1003.0358},
+          pages = {arXiv:1003.0358},
+          archivePrefix = {arXiv},
+          eprint = {1003.0358},
+          primaryClass = {cs.NE},
+          adsurl = {https://ui.adsabs.harvard.edu/abs/2010arXiv1003.0358C},
+          adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+          }
+
+          @ARTICLE{2020arXiv200610901G,
+          author = {{Gale}, Trevor and {Zaharia}, Matei and {Young}, Cliff and
+          {Elsen}, Erich},
+          title = "{Sparse GPU Kernels for Deep Learning}",
+          journal = {arXiv e-prints},
+          keywords = {Computer Science - Machine Learning, Computer Science - Distributed, Parallel, and Cluster Computing, Statistics - Machine Learning},
+          year = 2020,
+          month = jun,
+          }
+
+
+          @article{spelke2007,
+          author = {Spelke, Elizabeth S. and Kinzler, Katherine D.},
+          title = {Core knowledge},
+          journal = {Developmental Science},
+          volume = {10},
+          number = {1},
+          pages = {89-96},
+          doi = {10.1111/j.1467-7687.2007.00569.x},
+          url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-7687.2007.00569.x},
+          eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1467-7687.2007.00569.x},
+          abstract = {Abstract Human cognition is founded, in part, on four systems for representing objects, actions, number, and space. It may be based, as well, on a fifth system for representing social partners. Each system has deep roots in human phylogeny and ontogeny, and it guides and shapes the mental lives of adults. Converging research on human infants, non-human primates, children and adults in diverse cultures can aid both understanding of these systems and attempts to overcome their limits.},
+          year = {2007}
+          }
+
+                @misc{jeff1990,
+          title={Parallel Implementations of neural network training: two back-propagation approaches.},
+          author={Jeff Dean},
+          URL = {https://drive.google.com/file/d/1I1fs4sczbCaACzA9XwxR3DiuXVtqmejL/view},
+          year={1990},
+          }
+
+
+
+
+                @misc{computerhistorymuseum,
+          title={Moore's Law},
+          author={CHM},
+          year={2020},
+          url = {https://www.computerhistory.org/revolution/digital-logic/12/267},
+          }
+
+
+          @book{rumelhart1987,
+          author = {Rumelhart, David E. and McClelland, James L. and PDP Research Group, CORPORATE},
+          title = {Parallel Distributed Processing: Explorations in the Microstructure of Cognition, Vol. 1: Foundations},
+          year = {1986},
+          isbn = {026268053X},
+          publisher = {MIT Press},
+          address = {Cambridge, MA, USA}
+          }
+
+          @ARTICLE{Marblestone2016,
+
+          AUTHOR={Marblestone, Adam H. and Wayne, Greg and Kording, Konrad P.},
+
+          TITLE={Toward an Integration of Deep Learning and Neuroscience},
+
+          JOURNAL={Frontiers in Computational Neuroscience},
+
+          VOLUME={10},
+
+          PAGES={94},
+
+          YEAR={2016},
+
+          URL={https://www.frontiersin.org/article/10.3389/fncom.2016.00094},
+
+          DOI={10.3389/fncom.2016.00094},
+
+          ISSN={1662-5188},
+          }
+
+          @ARTICLE{2020Thompson,
+          author = {{Thompson}, Neil C. and {Greenewald}, Kristjan and {Lee}, Keeheon and
+          {Manso}, Gabriel F.},
+          title = "{The Computational Limits of Deep Learning}",
+          journal = {arXiv e-prints},
+          keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
+          year = 2020,
+          month = jul,
+          eid = {arXiv:2007.05558},
+          pages = {arXiv:2007.05558},
+          archivePrefix = {arXiv},
+          eprint = {2007.05558},
+          primaryClass = {cs.LG},
+          adsurl = {https://ui.adsabs.harvard.edu/abs/2020arXiv200705558T},
+          adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+          }
+
+          @misc{MCCLOSKEY1989109,
+          title = "Catastrophic Interference in Connectionist Networks: The Sequential Learning Problem",
+          editor = "Gordon H. Bower",
+          series = "Psychology of Learning and Motivation",
+          publisher = "Academic Press",
+          volume = "24",
+          pages = "109 - 165",
+          year = "1989",
+          issn = "0079-7421",
+          doi = "https://doi.org/10.1016/S0079-7421(08)60536-8",
+          author = "Michael McCloskey and Neal J. Cohen",
+          }
+
+
+
+                  @INPROCEEDINGS{7298594,
+                  author={C. {Szegedy} and  {Wei Liu} and  {Yangqing Jia} and P. {Sermanet} and S. {Reed} and D. {Anguelov} and D. {Erhan} and V. {Vanhoucke} and A. {Rabinovich}},
+                  booktitle={2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+                  title={Going deeper with convolutions},
+                  year={2015},
+                  volume={},
+                  number={},
+                  pages={1-9},}
+
+                  @misc{Gray2017GPUKF,
+          title={GPU Kernels for Block-Sparse Weights},
+          author={Scott Gray and A. Radford and Diederik P. Kingma},
+          year={2017}
+          }
+
+          @article {Heeger1773,
+          	author = {Heeger, David J.},
+          	title = {Theory of cortical function},
+          	volume = {114},
+          	number = {8},
+          	pages = {1773--1782},
+          	year = {2017},
+          	doi = {10.1073/pnas.1619788114},
+          	publisher = {National Academy of Sciences},
+          	issn = {0027-8424},
+          	URL = {https://www.pnas.org/content/114/8/1773},
+          	eprint = {https://www.pnas.org/content/114/8/1773.full.pdf},
+          	journal = {Proceedings of the National Academy of Sciences}
+          }
+
+
+                        @article{Dean202011TD,
+                  title={1.1 The Deep Learning Revolution and Its Implications for Computer Architecture and Chip Design},
+                  author={Jeffrey Dean},
+                  journal={2020 IEEE International Solid- State Circuits Conference - (ISSCC)},
+                  year={2020},
+                  pages={8-14}
+                  }
+
+                        @article{morgan1983,
+                  author = {Morgan, M. Granger},
+                  title = {The fifth generation: Artificial intelligence and Japan's computer challenge to the world, by Edward A. Feigenbaum and Pamela McCorduck. Reading, MA: Addison-Wesley, 1983, 275 pp. Price: \$15.35},
+                  journal = {Journal of Policy Analysis and Management},
+                  volume = {3},
+                  number = {1},
+                  pages = {156-156},
+                  doi = {10.2307/3324061},
+                  url = {https://onlinelibrary.wiley.com/doi/abs/10.2307/3324061},
+                  eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.2307/3324061},
+                  year = {1983}
+                  }
+
+                  @ARTICLE{2019cross,
+          author = {{Cross}, Andrew W. and {Bishop}, Lev S. and {Sheldon}, Sarah and
+          {Nation}, Paul D. and {Gambetta}, Jay M.},
+          title = "{Validating quantum computers using randomized model circuits}",
+          journal = {\pra},
+          keywords = {Quantum Physics},
+          year = 2019,
+          month = sep,
+          volume = {100},
+          number = {3},
+          }
+
+                  @article{tan2007,
+          author = {Tan, Cheemeng and Song, Hao and Niemi, Jarad and You, Lingchong},
+          year = {2007},
+          month = {06},
+          pages = {343-53},
+          title = {A synthetic biology challenge: Making cells compute},
+          volume = {3},
+          journal = {Molecular bioSystems},
+          doi = {10.1039/b618473c}
+          }
+
+          @inproceedings{Lindsey1994,
+          author = "Lindsey, Clark S. and Lindblad, Thomas",
+          title = "{Review of hardware neural networks: A User's perspective}",
+          booktitle = "{3rd Workshop on Neural Networks: From Biology to High-energy Physics}",
+          reportNumber = "TRITA-FYS-9012",
+          pages = "0215--224",
+          month = "9",
+          year = "1994"
+          }
+
+          @InProceedings{Elsen_2020_CVPR,
+          author = {Elsen, Erich and Dukhan, Marat and Gale, Trevor and Simonyan, Karen},
+          title = {Fast Sparse ConvNets},
+          booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+          month = {June},
+          year = {2020}
+          }
+
+          @article {Bi10464,
+          	author = {Bi, Guo-qiang and Poo, Mu-ming},
+          	title = {Synaptic Modifications in Cultured Hippocampal Neurons: Dependence on Spike Timing, Synaptic Strength, and Postsynaptic Cell Type},
+          	volume = {18},
+          	number = {24},
+          	pages = {10464--10472},
+          	year = {1998},
+          	doi = {10.1523/JNEUROSCI.18-24-10464.1998},
+          	publisher = {Society for Neuroscience},
+          	abstract = {In cultures of dissociated rat hippocampal neurons, persistent potentiation and depression of glutamatergic synapses were induced by correlated spiking of presynaptic and postsynaptic neurons. The relative timing between the presynaptic and postsynaptic spiking determined the direction and the extent of synaptic changes. Repetitive postsynaptic spiking within a time window of 20 msec after presynaptic activation resulted in long-term potentiation (LTP), whereas postsynaptic spiking within a window of 20 msec before the repetitive presynaptic activation led to long-term depression (LTD). Significant LTP occurred only at synapses with relatively low initial strength, whereas the extent of LTD did not show obvious dependence on the initial synaptic strength. Both LTP and LTD depended on the activation of NMDA receptors and were absent in cases in which the postsynaptic neurons were GABAergic in nature. Blockade of L-type calcium channels with nimodipine abolished the induction of LTD and reduced the extent of LTP. These results underscore the importance of precise spike timing, synaptic strength, and postsynaptic cell type in the activity-induced modification of central synapses and suggest that Hebb{\textquoteright}s rule may need to incorporate a quantitative consideration of spike timing that reflects the narrow and asymmetric window for the induction of synaptic modification.},
+          	issn = {0270-6474},
+          	URL = {https://www.jneurosci.org/content/18/24/10464},
+          	eprint = {https://www.jneurosci.org/content/18/24/10464.full.pdf},
+          	journal = {Journal of Neuroscience}
+          }
+
+                  @InProceedings{Payne2005,
+                  author="Payne, Bryson R.
+                  and Belkasim, Saeid O.
+                  and Owen, G. Scott
+                  and Weeks, Michael C.
+                  and Zhu, Ying",
+                  title="Accelerated 2D Image Processing on GPUs",
+                  booktitle="Computational Science -- ICCS 2005",
+                  year="2005",
+                  publisher="Springer Berlin Heidelberg",
+                  address="Berlin, Heidelberg",
+                  pages="256--264",
+                  isbn="978-3-540-32114-9"
+                  }
+
+                  @article {Lin1004,
+          author = {Lin, Xing and Rivenson, Yair and Yardimci, Nezih T. and Veli, Muhammed and Luo, Yi and Jarrahi, Mona and Ozcan, Aydogan},
+          title = {All-optical machine learning using diffractive deep neural networks},
+          volume = {361},
+          number = {6406},
+          pages = {1004--1008},
+          year = {2018},
+          doi = {10.1126/science.aat8084},
+          publisher = {American Association for the Advancement of Science},
+          issn = {0036-8075},
+          URL = {https://science.sciencemag.org/content/361/6406/1004},
+          eprint = {https://science.sciencemag.org/content/361/6406/1004.full.pdf},
+          journal = {Science}
+          }
+
+                  @INPROCEEDINGS{8741810,
+          author={M. {Davies}},
+          booktitle={2019 International Symposium on VLSI Design, Automation and Test (VLSI-DAT)},
+          title={Progress in Neuromorphic Computing : Drawing Inspiration from Nature for Gains in AI and Computing},
+          year={2019},
+          volume={},
+          number={},
+          pages={1-1},}
+
+                  @article{ambrogio2018,
+          author = {Ambrogio, Stefano and Narayanan, Pritish and Tsai, Hsinyu and Shelby, Robert and Boybat, Irem and Nolfo, Carmelo and Sidler, Severin and Giordano, Massimo and Bodini, Martina and Farinha, Nathan and Killeen, Benjamin and Cheng, Christina and Jaoudi, Yassine and Burr, Geoffrey},
+          year = {2018},
+          month = {06},
+          pages = {},
+          title = {Equivalent-accuracy accelerated neural-network training using analogue memory},
+          volume = {558},
+          journal = {Nature},
+          doi = {10.1038/s41586-018-0180-5}
+          }
+
+          @inproceedings{Hooker2019ABF,
+          title={A Benchmark for Interpretability Methods in Deep Neural Networks},
+          author={Sara Hooker and Dumitru Erhan and Pieter-Jan Kindermans and Been Kim},
+          booktitle={NeurIPS 2019},
+          year={2019},
+          url={https://papers.nips.cc/paper/9167-a-benchmark-for-interpretability-methods-in-deep-neural-networks.pdf},
+          }
+
+          @misc{nvidia2020,
+          title={NVIDIA Ampere Architecture In-Depth.},
+          author={Krashinsky, Ronny and Giroux, Olivier and Jones, Stephen and Stam, Nick and Ramaswamy,Sridhar},
+          URL = {https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/},
+          year={2020},
+          }
+
+          @ARTICLE{2020sun,
+          author = {{Sun}, Fei and {Qin}, Minghai and {Zhang}, Tianyun and {Liu}, Liu and
+          {Chen}, Yen-Kuang and {Xie}, Yuan},
+          title = "{Computation on Sparse Neural Networks: an Inspiration for Future Hardware}",
+          journal = {arXiv e-prints},
+          keywords = {Computer Science - Machine Learning, Computer Science - Neural and Evolutionary Computing, Statistics - Machine Learning},
+          year = 2020,
+          month = apr,
+          eid = {arXiv:2004.11946},
+          pages = {arXiv:2004.11946},
+          archivePrefix = {arXiv},
+          eprint = {2004.11946},
+          primaryClass = {cs.LG},
+          adsurl = {https://ui.adsabs.harvard.edu/abs/2020arXiv200411946S},
+          adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+          }
+
+
+          @misc{Lee2018,
+          title={The next step in Facebook AI hardware infrastructure},
+          author={Lee, Kevin  and Wang,Xiaodong},
+          year={2018},
+          URL="https://bit.ly/3bgZFDn",
+          }
+
+
+
+          @book{Haugeland,
+          author = {Haugeland, John},
+          title = {Artificial Intelligence: The Very Idea},
+          year = {1985},
+          isbn = {0262081539},
+          publisher = {Massachusetts Institute of Technology},
+          address = {USA}
+          }
+
+          @misc{Dettmers2020,
+          title={Which GPU for deep learning?},
+          author={Tim Dettmers},
+          year={2020},
+          url = {https://bit.ly/35qq8xe},
+          }
+
+          @article{BRODTKORB20134,
+          title = "Graphics processing unit (GPU) programming strategies and trends in GPU computing",
+          journal = "Journal of Parallel and Distributed Computing",
+          volume = "73",
+          number = "1",
+          pages = "4 - 13",
+          year = "2013",
+          note = "Metaheuristics on GPUs",
+          issn = "0743-7315",
+          doi = "https://doi.org/10.1016/j.jpdc.2012.04.003",
+          url = "http://www.sciencedirect.com/science/article/pii/S0743731512000998",
+          author = "André R. Brodtkorb and Trond R. Hagen and Martin L. Sætra",
+          keywords = "GPU computing, Heterogeneous computing, Profiling, Optimization, Debugging, Hardware, Future trends",
+          }
+
+                  @misc{lispcode,
+                  title={Course: 15-880(A) -- Introduction to Neural Networks},
+                  author={Dave Touretzky and Alex Waibel},
+                  year={1995},
+                  url = {  https://www.cs.cmu.edu/afs/cs/project/ai-repository/ai/areas/neural/edu/15_882a/},
+                  }
+
+
+                  @inproceedings{Fatahalian2004,
+                  author = {Fatahalian, K. and Sugerman, J. and Hanrahan, P.},
+                  title = {Understanding the Efficiency of GPU Algorithms for Matrix-Matrix Multiplication},
+                  year = {2004},
+                  isbn = {3905673150},
+                  publisher = {Association for Computing Machinery},
+                  address = {New York, NY, USA},
+                  url = {https://doi.org/10.1145/1058129.1058148},
+                  doi = {10.1145/1058129.1058148},
+                  booktitle = {Proceedings of the ACM SIGGRAPH/EUROGRAPHICS Conference on Graphics Hardware},
+                  pages = {133–137},
+                  numpages = {5},
+                  location = {Grenoble, France},
+                  series = {HWWS ’04}
+                  }
+
+                  @misc{lush2002,
+                  title = "Technical report: Lush reference manual, code available at http://lush.sourceforge.net",
+                  author = "Yann Lecun and Leon Bottou",
+                  year = "2002",
+                  language = "English (US)",
+                  type = "Other",
+                  }
+
+                        @ARTICLE{8364435,
+                  author={N. D. {Lane} and P. {Warden}},
+                  journal={Computer},
+                  title={The Deep (Learning) Transformation of Mobile and Embedded Computing},
+                  year={2018},
+                  volume={51},
+                  number={5},
+                  pages={12-16},
+                  keywords={embedded deep learning;machine learning;machine learning systems;deep model compression;mobile deep neural networks;embedded systems;mobile;mobile computing;pervasive computing;intelligent systems},
+                  doi={10.1109/MC.2018.2381129},
+                  ISSN={1558-0814},
+                  month={May},}
+
+          @inproceedings{Fatahalian2004,
+          author = {Fatahalian, K. and Sugerman, J. and Hanrahan, P.},
+          title = {Understanding the Efficiency of GPU Algorithms for Matrix-Matrix Multiplication},
+          year = {2004},
+          isbn = {3905673150},
+          publisher = {Association for Computing Machinery},
+          address = {New York, NY, USA},
+          url = {https://doi.org/10.1145/1058129.1058148},
+          doi = {10.1145/1058129.1058148},
+          booktitle = {Proceedings of the ACM SIGGRAPH/EUROGRAPHICS Conference on Graphics Hardware},
+          pages = {133–137},
+          numpages = {5},
+          location = {Grenoble, France},
+          series = {HWWS ’04}
+          }
+                  @article{singh_article,
+                  author = {Singh, Dr-Virender and Perdigones, Alicia and Garcia, Jose and Cañas, Ignacio and Mazarrón, Fernando},
+                  year = {2015},
+                  month = {01},
+                  pages = {Pages 76-85},
+                  title = {Analyzing Worldwide Research in Hardware Architecture, 1997-2011},
+                  volume = {Volume 58},
+                  journal = {Communications of the ACM},
+                  doi = {10.1145/2688498.2688499}
+                  }
+
+                        @article{HerculanoHouzel2014TheEB,
+                    title={The elephant brain in numbers},
+                    author={Suzana Herculano-Houzel and Kamilla Avelino-de-Souza and Kleber Neves and Jairo Porfirio and D{\'e}bora J. Messeder and Larissa Mattos Feij{\'o} and Jose Maldonado and Paul R Manger},
+                    journal={Frontiers in Neuroanatomy},
+                    year={2014},
+                    volume={8}
+                  }
+
+                  @article{Torch2002,
+                  author = {Collobert, Ronan and Bengio, Samy and Marithoz, Johnny},
+                  year = {2002},
+                  month = {11},
+                  pages = {},
+                  title = {Torch: A Modular Machine Learning Software Library}
+                  }
+
+                  @ARTICLE{1050511,
+            author={R. H. {Dennard} and F. H. {Gaensslen} and H. {Yu} and V. L. {Rideout} and E. {Bassous} and A. R. {LeBlanc}},
+            journal={IEEE Journal of Solid-State Circuits},
+            title={Design of ion-implanted MOSFET's with very small physical dimensions},
+            year={1974},
+            volume={9},
+            number={5},
+            pages={256-268},}
+
+            @article{MISRA2010239,
+          title = "Artificial neural networks in hardware: A survey of two decades of progress",
+          journal = "Neurocomputing",
+          volume = "74",
+          number = "1",
+          pages = "239 - 255",
+          year = "2010",
+          note = "Artificial Brains",
+          issn = "0925-2312",
+          doi = "https://doi.org/10.1016/j.neucom.2010.03.021",
+          url = "http://www.sciencedirect.com/science/article/pii/S092523121000216X",
+          author = "Janardan Misra and Indranil Saha",
+          }
+
+
+
+                        @ARTICLE{Sackinger129422,
+                    author={E. {Sackinger} and B. E. {Boser} and J. {Bromley} and Y. {LeCun} and L. D. {Jackel}},
+                    journal={IEEE Transactions on Neural Networks},
+                    title={Application of the ANNA neural network chip to high-speed character recognition},
+                    year={1992},
+                    volume={3},
+                    number={3},
+                    pages={498-505},}
+
+                        @article{Stroop1935,
+                  	pages = {643},
+                  	doi = {10.1037/h0054651},
+                  	title = {Studies of Interference in Serial Verbal Reactions},
+                  	number = {6},
+                  	journal = {Journal of Experimental Psychology},
+                  	year = {1935},
+                  	volume = {18},
+                  	author = {J. R. Stroop}
+                  }
+
+                  @article{kornblith2018,
+                    author    = {Simon Kornblith and
+                                 Jonathon Shlens and
+                                 Quoc V. Le},
+                    title     = {Do Better ImageNet Models Transfer Better?},
+                    journal   = {CoRR},
+                    volume    = {abs/1805.08974},
+                    year      = {2018},
+                    url       = {http://arxiv.org/abs/1805.08974},
+                    archivePrefix = {arXiv},
+                    eprint    = {1805.08974},
+                    timestamp = {Mon, 13 Aug 2018 16:48:13 +0200},
+                    biburl    = {https://dblp.org/rec/journals/corr/abs-1805-08974.bib},
+                    bibsource = {dblp computer science bibliography, https://dblp.org}
+                  }
+
+                  @ARTICLE{2020arXiv200705558T,
+                         author = {{Thompson}, Neil C. and {Greenewald}, Kristjan and {Lee}, Keeheon and
+                           {Manso}, Gabriel F.},
+                          title = "{The Computational Limits of Deep Learning}",
+                        journal = {arXiv e-prints},
+                       keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
+                           year = 2020,
+                          month = jul,
+                            eid = {arXiv:2007.05558},
+                          pages = {arXiv:2007.05558},
+                  archivePrefix = {arXiv},
+                         eprint = {2007.05558},
+                   primaryClass = {cs.LG},
+                         adsurl = {https://ui.adsabs.harvard.edu/abs/2020arXiv200705558T},
+                        adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+                  }
+
+                        @ARTICLE{2020brown,
+                         author = {{Brown}, Tom B. and {Mann}, Benjamin and {Ryder}, Nick and
+                           {Subbiah}, Melanie and {Kaplan}, Jared and {Dhariwal}, Prafulla and
+                           {Neelakantan}, Arvind and {Shyam}, Pranav and {Sastry}, Girish and
+                           {Askell}, Amanda and {Agarwal}, Sandhini and {Herbert-Voss}, Ariel and
+                           {Krueger}, Gretchen and {Henighan}, Tom and {Child}, Rewon and
+                           {Ramesh}, Aditya and {Ziegler}, Daniel M. and {Wu}, Jeffrey and
+                           {Winter}, Clemens and {Hesse}, Christopher and {Chen}, Mark and
+                           {Sigler}, Eric and {Litwin}, Mateusz and {Gray}, Scott and
+                           {Chess}, Benjamin and {Clark}, Jack and {Berner}, Christopher and {McCand
+                          lish}, Sam and {Radford}, Alec and {Sutskever}, Ilya and {Amodei}, Dario},
+                          title = "{Language Models are Few-Shot Learners}",
+                        journal = {arXiv e-prints},
+                       keywords = {Computer Science - Computation and Language},
+                           year = 2020,
+                          month = may,
+                            eid = {arXiv:2005.14165},
+                          pages = {arXiv:2005.14165},
+                  archivePrefix = {arXiv},
+                         eprint = {2005.14165},
+                   primaryClass = {cs.CL},
+                         adsurl = {https://ui.adsabs.harvard.edu/abs/2020arXiv200514165B},
+                        adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+                  }
+
+                        @ARTICLE{2020Thompson,
+                         author = {{Thompson}, Neil C. and {Greenewald}, Kristjan and {Lee}, Keeheon and
+                           {Manso}, Gabriel F.},
+                          title = "{The Computational Limits of Deep Learning}",
+                        journal = {arXiv e-prints},
+                       keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
+                           year = 2020,
+                          month = jul,
+                            eid = {arXiv:2007.05558},
+                          pages = {arXiv:2007.05558},
+                  archivePrefix = {arXiv},
+                         eprint = {2007.05558},
+                   primaryClass = {cs.LG},
+                         adsurl = {https://ui.adsabs.harvard.edu/abs/2020arXiv200705558T},
+                        adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+                  }
+
+
+
+
+                  @ARTICLE{2015szegedy,
+                         author = {{Szegedy}, Christian and {Vanhoucke}, Vincent and {Ioffe}, Sergey and
+                           {Shlens}, Jonathon and {Wojna}, Zbigniew},
+                          title = "{Rethinking the Inception Architecture for Computer Vision}",
+                        journal = {arXiv e-prints},
+                       keywords = {Computer Science - Computer Vision and Pattern Recognition},
+                           year = 2015,
+                          month = dec,
+                            eid = {arXiv:1512.00567},
+                          pages = {arXiv:1512.00567},
+                  archivePrefix = {arXiv},
+                         eprint = {1512.00567},
+                   primaryClass = {cs.CV},
+                         adsurl = {https://ui.adsabs.harvard.edu/abs/2015arXiv151200567S},
+                        adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+                  }
+
+                  @ARTICLE{bubic2010,
+
+                  AUTHOR={Bubic, Andreja and Von Cramon, D. Yves and Schubotz, Ricarda},
+
+                  TITLE={Prediction, cognition and the brain},
+
+                  JOURNAL={Frontiers in Human Neuroscience},
+
+                  VOLUME={4},
+
+                  PAGES={25},
+
+                  YEAR={2010},
+
+                  URL={https://www.frontiersin.org/article/10.3389/fnhum.2010.00025},
+
+                  DOI={10.3389/fnhum.2010.00025},
+
+                  ISSN={1662-5161},
+
+                  ABSTRACT={The term “predictive brain” depicts one of the most relevant concepts in cognitive neuroscience which emphasizes the importance of “looking into the future”, namely prediction, preparation, anticipation, prospection or expectations in various cognitive domains. Analogously, it has been suggested that predictive processing represents one of the fundamental principles of neural computations and that errors of prediction may be crucial for driving neural and cognitive processes as well as behavior. This review discusses research areas which have recognized the importance of prediction and introduces the relevant terminology and leading theories in the field in an attempt to abstract some generative mechanisms of predictive processing. Furthermore, we discuss the process of testing the validity of postulated expectations by matching these to the realized events and compare the subsequent processing of events which confirm to those which violate the initial predictions. We conclude by suggesting that, although a lot is known about this type of processing, there are still many open issues which need to be resolved before a unified theory of predictive processing can be postulated with regard to both cognitive and neural functioning.}
+                  }
+
+
+                  @article{Zador2019ACO,
+                    title={A Critique of Pure Learning: What Artificial Neural Networks can Learn from Animal Brains},
+                    author={Anthony M. Zador},
+                    journal={bioRxiv},
+                    year={2019}
+                  }
+
+
+                  @ARTICLE{2016Szegedy,
+                         author = {{Szegedy}, Christian and {Ioffe}, Sergey and {Vanhoucke}, Vincent and
+                           {Alemi}, Alex},
+                          title = "{Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning}",
+                        journal = {arXiv e-prints},
+                       keywords = {Computer Science - Computer Vision and Pattern Recognition},
+                           year = 2016,
+                          month = feb,
+                            eid = {arXiv:1602.07261},
+                          pages = {arXiv:1602.07261},
+                  archivePrefix = {arXiv},
+                         eprint = {1602.07261},
+                   primaryClass = {cs.CV},
+                         adsurl = {https://ui.adsabs.harvard.edu/abs/2016arXiv160207261S},
+                        adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+                  }
+
+
+                  BibTeX
+                  @inproceedings{2019barham,
+                  author = {Barham, Paul and Isard, Michael},
+                  title = {Machine Learning Systems Are Stuck in a Rut},
+                  year = {2019},
+                  isbn = {9781450367271},
+                  publisher = {Association for Computing Machinery},
+                  address = {New York, NY, USA},
+                  url = {https://doi.org/10.1145/3317550.3321441},
+                  doi = {10.1145/3317550.3321441},
+                  booktitle = {Proceedings of the Workshop on Hot Topics in Operating Systems},
+                  pages = {177–183},
+                  numpages = {7},
+                  location = {Bertinoro, Italy},
+                  series = {HotOS ’19}
+                  }
+
+          @article{macia2014,
+          author = {Macía, Javier and Sole, Ricard},
+          year = {2014},
+          month = {02},
+          pages = {e81248},
+          title = {How to Make a Synthetic Multicellular Computer},
+          volume = {9},
+          journal = {PloS one},
+          doi = {10.1371/journal.pone.0081248}
+          }
+
+
+
+
+                  @inproceedings{quoc2012,
+                  author = {Le, Quoc V. and Ranzato, Marc’Aurelio and Monga, Rajat and Devin, Matthieu and Chen, Kai and Corrado, Greg S. and Dean, Jeff and Ng, Andrew Y.},
+                  title = {Building High-Level Features Using Large Scale Unsupervised Learning},
+                  year = {2012},
+                  isbn = {9781450312851},
+                  publisher = {Omnipress},
+                  address = {Madison, WI, USA},
+                  booktitle = {Proceedings of the 29th International Coference on International Conference on Machine Learning},
+                  pages = {507–514},
+                  numpages = {8},
+                  location = {Edinburgh, Scotland},
+                  series = {ICML’12}
+                  }
+
+
+                         @article{PMID15632230,
+                          	Title = {How the brain decides what we see},
+                          	Author = {Smythies, John},
+                          	DOI = {10.1177/014107680509800106},
+                          	Number = {1},
+                          	Volume = {98},
+                          	Month = {January},
+                          	Year = {2005},
+                          	Journal = {Journal of the Royal Society of Medicine},
+                          	ISSN = {0141-0768},
+                          	Pages = {18—20},
+                          	URL = {https://europepmc.org/articles/PMC1079232},
+                          }
+
+                          @article{OH20041311kyoung,
+                          title = "GPU implementation of neural networks",
+                          journal = "Pattern Recognition",
+                          volume = "37",
+                          number = "6",
+                          pages = "1311 - 1314",
+                          year = "2004",
+                          issn = "0031-3203",
+                          doi = "https://doi.org/10.1016/j.patcog.2004.01.013",
+                          url = "http://www.sciencedirect.com/science/article/pii/S0031320304000524",
+                          author = "Kyoung-Su Oh and Keechul Jung",
+                          keywords = "Graphics processing unit(GPU), Neural network(NN), Multi-layer perceptron, Text detection",
+                          abstract = "Graphics processing unit (GPU) is used for a faster artificial neural network. It is used to implement the matrix multiplication of a neural network to enhance the time performance of a text detection system. Preliminary results produced a 20-fold performance enhancement using an ATI RADEON 9700 PRO board. The parallelism of a GPU is fully utilized by accumulating a lot of input feature vectors and weight vectors, then converting the many inner-product operations into one matrix operation. Further research areas include benchmarking the performance with various hardware and GPU-aware learning algorithms."
+                          }
+
+                          @article{MORGAN1992248,
+                          title = "The ring array processor: A multiprocessing peripheral for connectionist applications",
+                          journal = "Journal of Parallel and Distributed Computing",
+                          volume = "14",
+                          number = "3",
+                          pages = "248 - 259",
+                          year = "1992",
+                          issn = "0743-7315",
+                          doi = "https://doi.org/10.1016/0743-7315(92)90067-W",
+                          url = "http://www.sciencedirect.com/science/article/pii/074373159290067W",
+                          author = "Nelson Morgan and James Beck and Phil Kohn and Jeff Bilmes and Eric Allman and Joachim Beer",
+                          abstract = "We have designed and implemented a Ring Array Processor (RAP) for fast implementation of our continuous speech recognition training algorithms, which are currently dominated by layered “neural” network calculations. The RAP is a multi-DSP system with a low-latency ring interconnection scheme using programmable gate array technology and a significant amount of local memory per node (4–16 Mbytes of dynamic memory and 256 Kbytes of fast static RAM). Theoretical peak performance is 128 MFLOPS/board. A working system with 20 nodes has been used for our research at rates of 200–300 million connections per second for probability evaluation, and at roughly 30–60 million connection updates per second for training. A fully functional system with 40 nodes has also been benchmarked at roughly twice these rates. While practical considerations such as workstation address space restrict current implementations to 64 nodes, the architecture scales to about 16,000 nodes. For problems with 2 units per processor, communication and control overhead would reduce peak performance on the error back-propagation algorithm to about 50% of a linear speedup. This report describes the motivation for the RAP and shows how the architecture matches the target algorithm. We further describe some of the key features of the hardware and software design."
+                          }
+
+                          @article{kingsburyhipnet,
+                          author = {Kingsbury, Brian and Morgan, Nelson and Wawrzynek, John},
+                          year = {1998},
+                          month = {03},
+                          pages = {},
+                          title = {HiPNeT-1: A Highly Pipelined Architecture for Neural Network Training}
+                          }
+
+                          @article {Kriegman1853,
+                          	author = {Kriegman, Sam and Blackiston, Douglas and Levin, Michael and Bongard, Josh},
+                          	title = {A scalable pipeline for designing reconfigurable organisms},
+                          	volume = {117},
+                          	number = {4},
+                          	pages = {1853--1859},
+                          	year = {2020},
+                          	doi = {10.1073/pnas.1910837117},
+                          	publisher = {National Academy of Sciences},
+                          	issn = {0027-8424},
+                          	URL = {https://www.pnas.org/content/117/4/1853},
+                          	eprint = {https://www.pnas.org/content/117/4/1853.full.pdf},
+                          	journal = {Proceedings of the National Academy of Sciences}
+                          }
+
+                               @misc{mirhoseini2020chip,
+                              title={Chip Placement with Deep Reinforcement Learning},
+                              author={Azalia Mirhoseini and Anna Goldie and Mustafa Yazgan and Joe Jiang and Ebrahim Songhori and Shen Wang and Young-Joon Lee and Eric Johnson and Omkar Pathak and Sungmin Bae and Azade Nazi and Jiwoo Pak and Andy Tong and Kavya Srinivasa and William Hang and Emre Tuncer and Anand Babu and Quoc V. Le and James Laudon and Richard Ho and Roger Carpenter and Jeff Dean},
+                              year={2020},
+                              eprint={2004.10746},
+                              archivePrefix={arXiv},
+                              primaryClass={cs.LG}
+                          }
+                                             @misc{Hennessy2019,
+                                                                    title = {The End of Moore's Law, CPUs (as we
+                                      know them), and the Rise of Domain
+                                      Specific Architectures},
+                                       author={John Hennessy},
+                                                                    url = {https://www.kisacoresearch.com/sites/default/files/presentations/09.00_-_alphabet_-_john_hennessy.pdf},
+                                                                    year ={2019}
+                                                                    }
+
+                                @article{LILLICRAP201982,
+                                title = "Backpropagation through time and the brain",
+                                journal = "Current Opinion in Neurobiology",
+                                volume = "55",
+                                pages = "82 - 89",
+                                year = "2019",
+                                note = "Machine Learning, Big Data, and Neuroscience",
+                                issn = "0959-4388",
+                                doi = "https://doi.org/10.1016/j.conb.2019.01.011",
+                                url = "http://www.sciencedirect.com/science/article/pii/S0959438818302009",
+                                author = "Timothy P Lillicrap and Adam Santoro",
+                                }
+
+
+
+
+                                  @misc{thebitterlesson2019,
+                                                title={The Bitter Lesson},
+                                                author={Rich Sutton},
+                                                year={2019},
+                                              url = {http://www.incompleteideas.net/IncIdeas/BitterLesson.html},
+
+                                            }
+
+
+
+
+
+                                            @misc{Howe1994,
+                          author="Howe, Denis B.
+                          and Asanovi{\'{c}}, Krste",
+                          title="SPACE: Symbolic Processing in Associative Computing Elements",
+                          bookTitle="VLSI for Neural Networks and Artificial Intelligence",
+                          year="1994",
+                          publisher="Springer US",
+                          address="Boston, MA",
+                          pages="243--252",
+                          abstract="Many AI tasks require extensive searching and processing within large data structures. Two example applications are semantic network processing [Higuchi et al, 1991], and maintaining hypothesis blackboards in a multi-agent knowledge-based system for speech understanding [Asanovi{\'{c}} and Chapman, 1988]. Associative processors promise significant improvements in cost/performance for these data parallel AI applications [Foster, 1976, Lea, 1977, Kohonen, 1980]. SPACE is an associative processor architecture designed to allow experimentation with such applications.",
+                          isbn="978-1-4899-1331-9",
+                          doi="10.1007/978-1-4899-1331-9_24",
+                          url="https://doi.org/10.1007/978-1-4899-1331-9_24"
+                          }
+
+                          @inproceedings{ciresan2011,
+                          author = {Ciresan, Dan and Meier, Ueli and Masci, Jonathan and Gambardella, Luca Maria and Schmidhuber, Jürgen},
+                          year = {2011},
+                          month = {07},
+                          pages = {1237-1242},
+                          title = {Flexible, High Performance Convolutional Neural Networks for Image Classification.},
+                          journal = {International Joint Conference on Artificial Intelligence IJCAI-2011},
+                          doi = {10.5591/978-1-57735-516-8/IJCAI11-210}
+                          }
+
+                            @misc{wigger2020,
+                                                title={OpenAI launches an API to commercialize its research},
+                                                author={Kyle Wiggers},
+                                                year={2020},
+                                              url = {https://venturebeat.com/2020/06/11/openai-launches-an-api-to-commercialize-its-research/},
+
+                                            }
+
+
+
+                                          @misc{welling2019,
+                                                title={Do we still need models or just more data and compute?},
+                                                author={Max Welling},
+                                                year={2019},
+                                              url = {https://staff.fnwi.uva.nl/m.welling/wp-content/uploads/Model-versus-Data-AI-1.pdf},
+
+                                            }
+
+                                            @article {Eagleman2036,
+                  	author = {Eagleman, David M. and Sejnowski, Terrence J.},
+                  	title = {Motion Integration and Postdiction in Visual Awareness},
+                  	volume = {287},
+                  	number = {5460},
+                  	pages = {2036--2038},
+                  	year = {2000},
+                  	doi = {10.1126/science.287.5460.2036},
+                  	publisher = {American Association for the Advancement of Science},
+                  	abstract = {In the flash-lag illusion, a flash and a moving object in the same location appear to be offset. A series of psychophysical experiments yields data inconsistent with two previously proposed explanations: motion extrapolation (a predictive model) and latency difference (an online model). We propose an alternative in which visual awareness is neither predictive nor online but is postdictive, so that the percept attributed to the time of the flash is a function of events that happen in the \~{}80 milliseconds after the flash. The results here show how interpolation of the past is the only framework of the three models that provides a unified explanation for the flash-lag phenomenon.},
+                  	issn = {0036-8075},
+                  	URL = {https://science.sciencemag.org/content/287/5460/2036},
+                  	eprint = {https://science.sciencemag.org/content/287/5460/2036.full.pdf},
+                  	journal = {Science}
+                  }
+
+
+                                @InProceedings{coates13,
+                            title = 	 {Deep learning with COTS HPC systems},
+                            author = 	 {Adam Coates and Brody Huval and Tao Wang and David Wu and Bryan Catanzaro and Ng Andrew},
+                            booktitle = 	 {Proceedings of the 30th International Conference on Machine Learning},
+                            pages = 	 {1337--1345},
+                            year = 	 {2013},
+                            editor = 	 {Sanjoy Dasgupta and David McAllester},
+                            volume = 	 {28},
+                            number =       {3},
+                            series = 	 {Proceedings of Machine Learning Research},
+                            address = 	 {Atlanta, Georgia, USA},
+                            month = 	 {17--19 Jun},
+                            publisher = 	 {PMLR},
+                            pdf = 	 {http://proceedings.mlr.press/v28/coates13.pdf},
+                            url = 	 {http://proceedings.mlr.press/v28/coates13.html},
+                            abstract = 	 {Scaling up deep learning algorithms has been shown to lead to increased performance in benchmark tasks and to enable discovery of complex high-level features.  Recent efforts to train extremely large networks (with over 1 billion parameters) have relied on cloud-like computing infrastructure and thousands of CPU cores.  In this paper, we present technical details and results from our own system based on Commodity Off-The-Shelf High Performance Computing (COTS HPC) technology: a cluster of GPU servers with Infiniband interconnects and MPI.  Our system is able to train 1 billion parameter networks on just 3 machines in a couple of days, and we show that it can scale to networks with over 11 billion parameters using just 16 machines.  As this infrastructure is much more easily marshaled by others, the approach enables much wider-spread research with extremely large neural networks.}
+                          }
+
+
+                                                @misc{strubell2019energy,
+                                                title={Energy and Policy Considerations for Deep Learning in NLP},
+                                                author={Emma Strubell and Ananya Ganesh and Andrew McCallum},
+                                                year={2019},
+                                                eprint={1906.02243},
+                                                archivePrefix={arXiv},
+                                                primaryClass={cs.CL}
+                                            }
+
+                                                       @misc{2020matrix,
+                                                                    title = {Understanding Matrix Capsules with EM
+                                                  Routing.},
+                                                                    url = {https://jhui.github.io/2017/11/14/
+                                                  Matrix-Capsules-with-EM-routing-Capsule-Network},
+                                                                    accessed = {2020-04-20},
+                                                                    }
+
+                                                                    @article{2018vacuum,
+                                                                    author = {Computer History Archives Project},
+                                                                    title = {Computer History 1949 -1960 Early Vacuum Tube Computers Overview, History Project Educational},
+                                                                    url = {https://www.youtube.com/watch?v=WnNm_uJYWhA},
+                                                                    year = {2018},
+                                                                    }
+
+                                                                    @article{2020cortexm,
+                                                                    author = {ARM},
+                                                                    title = {Enhancing AI Performance for IoT Endpoint Devices},
+                                                                    url = {https://www.arm.com/company/news/2020/02/new-ai-technology-from-arm},
+                                                                    year = {2020},
+                                                                    }
+
+                                                                    @article{2019EdgeTpu,
+                                                                    author = {Gupta, Suyog and Tan, Mingxing},
+                                                                    title = {EfficientNet-EdgeTPU: Creating Accelerator-Optimized Neural Networks with AutoML},
+                                                                    url = {https://ai.googleblog.com/2019/08/efficientnet-edgetpu-creating.html},
+                                                                    year = {2019},
+                                                                    }
+
+                                                                    @book{Raymond1990,
+                                                                    author = {Kurzweil, Raymond},
+                                                                    title = {The Age of Intelligent Machines},
+                                                                    year = {1990},
+                                                                    publisher = {MIT Press},
+                                                                    address = {Cambridge, MA, USA},
+                                                                    }
+
+                                                                    @ARTICLE{Moravec98whenwill,
+                                                                  author = {Hans Moravec},
+                                                                  title = {When will computer hardware match the human brain},
+                                                                  journal = {Journal of Transhumanism},
+                                                                  year = {1998},
+                                                                  volume = {1}
+                                                              }
+
+                                                                    @article{2018Amodei,
+                                                                    author = {Amodei,Dario and Hernandez, Danny and Sastry,Girish and Clark, Jack and Brockman, Greg and Sutskever, Ilya},
+                                                                    title = {AI and Compute},
+                                                                    url = {https://openai.com/blog/ai-and-compute/},
+                                                                    year = {2018},
+                                                                    }
+
+                                                                    @inproceedings{Dong2019,
+                                                                    author = {Zhen, Dong and Yao, Zhewei and Gholami, Amir and Mahoney, Michael and Keutzer, Kurt},
+                                                                    year = {2019},
+                                                                    month = {10},
+                                                                    pages = {293-302},
+                                                                    title = {HAWQ: Hessian AWare Quantization of Neural Networks With Mixed-Precision},
+                                                                    doi = {10.1109/ICCV.2019.00038}
+                                                                    }
+
+                                                                    @article{2018Sato,
+                                                                    author = {Kaz Sato},
+                                                                    title = {What makes TPUs fine-tuned for deep learning?},
+                                                                    url = {https://cloud.google.com/blog/products/ai-machine-learning/what-makes-tpus-fine-tuned-for-deep-learning},
+                                                                    year = {2018},
+                                                                    }
+
+                                                                    @book{diamond98,
+                                                                      author = {Diamond, Jared},
+                                                                      title = {Guns, Germs, and Steel: the Fates of Human Societies},
+                                                                      year = {1998}
+                                                                    }
+
+                                                                    @misc{gale2019state,
+                                                                      title={The State of Sparsity in Deep Neural Networks},
+                                                                      author={Trevor Gale and Erich Elsen and Sara Hooker},
+                                                                      year={2019},
+                                                                      eprint={1902.09574},
+                                                                      archivePrefix={arXiv},
+                                                                      primaryClass={cs.LG}
+                                                                  }
+
+                         @misc{malsburg_1986,
+                          author="Van Der Malsburg, C.",
+                          editor="Palm, G{\"u}nther
+                          and Aertsen, Ad",
+                          title="Frank Rosenblatt: Principles of Neurodynamics: Perceptrons and the Theory of Brain Mechanisms",
+                          booktitle="Brain Theory",
+                          year="1986",
+                          publisher="Springer Berlin Heidelberg",
+                          address="Berlin, Heidelberg",
+                          pages="245--248",
+                          abstract="Frank Rosenblatt's intention with his book, according to his own introduction, is not just to describe a machine, the perceptron, but rather to put forward a theory. He formulates a series of machines. Each machine serves to introduce a new concept.",
+                          isbn="978-3-642-70911-1"
+                          }
+
+                          @ARTICLE{129422,
+                            author={E. {Sackinger} and B. E. {Boser} and J. {Bromley} and Y. {LeCun} and L. D. {Jackel}},
+                            journal={IEEE Transactions on Neural Networks},
+                            title={Application of the ANNA neural network chip to high-speed character recognition},
+                            year={1992},
+                            volume={3},
+                            number={3},
+                            pages={498-505},}
+
+
+
+                                                                    @article{moore1965,
+                                                                    author = {Moore, Gordon},
+                                                                    journal = {Electronics},
+                                                                    month = {April},
+                                                                    number = {8},
+                                                                    title = {Cramming more components onto integrated circuits},
+                                                                    url = {https://www.cs.utexas.edu/~fussell/courses/cs352h/papers/moore.pdf},
+                                                                    volume = {38},
+                                                                    year = {1965},
+                                                                    }
+
+                                                                    @incollection{NIPS2017_6975,
+                                                                    title = {Dynamic Routing Between Capsules},
+                                                                    author = {Sabour, Sara and Frosst, Nicholas and Hinton, Geoffrey E},
+                                                                    booktitle = {Advances in Neural Information Processing Systems 30},
+                                                                    pages = {3856--3866},
+                                                                    year = {2017},
+                                                                    url = {http://papers.nips.cc/paper/6975-dynamic-routing-between-capsules.pdf},
+                                                                    }
+
+
+                                                                    @book{lucas1991,
+                                                                    author = {Lucas, Peter and van der Gaag, Linda},
+                                                                    title = {Principles of Expert Systems},
+                                                                    year = {1991},
+                                                                    address = {USA},
+                                                                    }
+
+                                                                    @article{Wang2018HAQHA,
+                                                                title={HAQ: Hardware-Aware Automated Quantization},
+                                                                author={Kuan Wang and Zhijian Liu and Yujun Lin and Ji Lin and Song Han},
+                                                                journal={ArXiv},
+                                                                year={2018},
+                                                                volume={abs/1811.08886}
+                                                              }
+
+                                                                    @article{Singh2015,
+                                                                    author = {Singh, Dr-Virender and Perdigones, Alicia and Garcia, Jose and Cañas, Ignacio and Mazarrón, Fernando},
+                                                                    year = {2015},
+                                                                    month = {01},
+                                                                    pages = {Pages 76-85},
+                                                                    title = {Analyzing Worldwide Research in Hardware Architecture, 1997-2011},
+                                                                    volume = {Volume 58},
+                                                                    journal = {Communications of the ACM},
+                                                                    doi = {10.1145/2688498.2688499}
+                                                                    }
+
+                                                                    @INPROCEEDINGS{2014Horowitz, author={M. {Horowitz}},
+                                                                    booktitle={2014 IEEE International Solid-State Circuits Conference Digest of Technical Papers (ISSCC)},
+                                                                    title={1.1 Computing's energy problem (and what we can do about it)},
+                                                                    year={2014}, volume={}, number={}, pages={10-14},}
+
+                                                                    @article{2014Mark1,
+                                                                    title = {Grace Hopper, computing pioneer},
+                                                                    journal = {The Harvard Gazette},
+                                                                    year = {2014},
+                                                                    url = {https://news.harvard.edu/gazette/story/2014/12/grace-hopper-computing-pioneer/},
+                                                                    author = {Walter Isaacson},
+                                                                    }
+
+                                                                    @InProceedings{1986Rosenblatt,
+                                                                    author={Van Der Malsburg, C},
+                                                                    title={Frank Rosenblatt: Principles of Neurodynamics: Perceptrons and the Theory of Brain Mechanisms},
+                                                                    year={1986},
+                                                                    publisher={Springer Berlin Heidelberg},
+                                                                    pages={245--248},
+                                                                    }
+
+                                                                    @inproceedings{inproceedings2011,
+                                                                    author = {Ciresan, Dan and Meier, Ueli and Masci, Jonathan and Gambardella, Luca Maria and Schmidhuber, Jürgen},
+                                                                    year = {2011},
+                                                                    month = {07},
+                                                                    pages = {1237-1242},
+                                                                    title = {Flexible, High Performance Convolutional Neural Networks for Image Classification.},
+                                                                    journal = {International Joint Conference on Artificial Intelligence IJCAI-2011},
+                                                                    doi = {10.5591/978-1-57735-516-8/IJCAI11-210}
+                                                                    }
+
+                                                                    @article{LeCun1989,
+                                                                    author = {LeCun, Y. and Boser, B. and Denker, J. S. and Henderson, D. and Howard, R. E. and Hubbard, W. and Jackel, L. D.},
+                                                                    title = {Backpropagation Applied to Handwritten Zip Code Recognition},
+                                                                    year = {1989},
+                                                                    publisher = {MIT Press},
+                                                                    volume = {1},
+                                                                    number = {4},
+                                                                    url = {https://doi.org/10.1162/neco.1989.1.4.541},
+                                                                    pages = {541–551},
+                                                                    }
+
+                                                                    @article{Hennessy2019,
+                                                              author = {Hennessy, John L. and Patterson, David A.},
+                                                              title = {A New Golden Age for Computer Architecture},
+                                                              year = {2019},
+                                                              issue_date = {January 2019},
+                                                              publisher = {Association for Computing Machinery},
+                                                              address = {New York, NY, USA},
+                                                              volume = {62},
+                                                              number = {2},
+                                                              issn = {0001-0782},
+                                                              url = {https://doi.org/10.1145/3282307},
+                                                              doi = {10.1145/3282307},
+                                                              journal = {Commun. ACM},
+                                                              month = jan,
+                                                              pages = {48–60},
+                                                              numpages = {13}
+                                                              }
+
+                                                              @book{gilder2000telecosm,
+                                                          title={Telecosm: How Infinite Bandwidth Will Revolutionize Our World},
+                                                          author={Gilder, G.},
+                                                          isbn={9780743215947},
+                                                          url={https://books.google.com/books?id=Kzo-KTxdwcEC},
+                                                          year={2000},
+                                                          publisher={Free Press}
+                                                        }
+
+
+
+
+
+                                                                    @article{dwayne2001,
+                                                                    author = {Dwayne Moore},
+                                                                    title = {The Anna Karenina Principle Applied to Ecological Risk Assessments of Multiple Stressors},
+                                                                    journal = {Human and Ecological Risk Assessment: An International Journal},
+                                                                    volume = {7},
+                                                                    number = {2},
+                                                                    pages = {231-237},
+                                                                    year  = {2001},
+                                                                    doi = {10.1080/20018091094349},
+                                                                    }
+
+
+                                                                    @inproceedings{Hooker2019ABF,
+                                                                     title={A Benchmark for Interpretability Methods in Deep Neural Networks},
+                                                                     author={Sara Hooker and Dumitru Erhan and Pieter-Jan Kindermans and Been Kim},
+                                                                     booktitle={NeurIPS 2019},
+                                                                     year={2019},
+                                                                     url={https://papers.nips.cc/paper/9167-a-benchmark-for-interpretability-methods-in-deep-neural-networks.pdf},
+                                                                    }
+
+                                                                    @book{bruce1991,
+                                                                    author = {Collier, Bruce},
+                                                                    title = {Little Engines That Could’ve: The Calculating Machines of Charles Babbage},
+                                                                    year = {1991},
+                                                                    isbn = {0824000439},
+                                                                    publisher = {Garland Publishing, Inc.},
+                                                                    address = {USA}
+                                                                    }
+
+
+                                                                    @article{1963steinbuch,
+                                                                    author={K, Steinbuch and U. Piske},
+                                                                    journal={IEEE Transactions on Electronic Computers},
+                                                                    title={Learning matrices and their applications},
+                                                                    year={1963}, volume={EC-12}, number={6}, pages={846-862},}
+
+                                                                    @article{2018acceleratingai,
+                                                                    title={Accelerating AI: Past, Present, and Future},
+                                                                    year={2018},
+                                                                    url={https://www.youtube.com/watch?v=8n2HLp2gtYs&t=2116s},
+                                                                    author={Krste Asanovic},
+                                                                    }
+
+                                                                    @article{2017neurons,
+                                                                    title ={On the frontiers of biomedicine with professor Rahul Sarpeshkar},
+                                                                    journal = {Dartmouth Magazine},
+                                                                    year = {2017},
+                                                                    url = {https://dartmouthalumnimagazine.com/articles/cell-power},
+                                                                    author = {Kristin Sainani},
+                                                                    }
+
+                                                                    @book{warden2019tinyml,
+                                                                title={TinyML: Machine Learning with TensorFlow Lite on Arduino and Ultra-Low-Power Microcontrollers},
+                                                                author={Warden, P. and Situnayake, D.},
+                                                                isbn={9781492052043},
+                                                                url={https://books.google.com/books?id=sB3mxQEACAAJ},
+                                                                year={2019},
+                                                                publisher={O'Reilly Media, Incorporated}
+                                                              }
+
+                                                                    @article{2019Feldman,
+                                                                    title ={The era of general purpose computers is ending},
+                                                                    year = {2019},
+                                                                    url = {https://www.nextplatform.com/2019/02/05/the-era-of-general-purpose-computers-is-ending/},
+                                                                    author = {Michael Feldman},
+                                                                    }
+
+                                                                    @book{Hinton1989,
+                                                                    author = {Hinton, Geoffrey E. and Anderson, James A.},
+                                                                    title = {Parallel Models of Associative Memory},
+                                                                    year = {1989},
+                                                                    }
+
+                                                                    @article{Linnainmaa1976TaylorEO,
+                                                          title={Taylor expansion of the accumulated rounding error},
+                                                          author={Seppo Linnainmaa},
+                                                          journal={BIT Numerical Mathematics},
+                                                          year={1976},
+                                                          volume={16},
+                                                          pages={146-160}
+                                                        }
+
+
+                                                                    @inproceedings{Barham2019,
+                                                                    author = {Barham, Paul and Isard, Michael},
+                                                                    title = {Machine Learning Systems Are Stuck in a Rut},
+                                                                    year = {2019},
+                                                                    isbn = {9781450367271},
+                                                                    publisher = {Association for Computing Machinery},
+                                                                    address = {New York, NY, USA},
+                                                                    url = {https://doi.org/10.1145/3317550.3321441},
+                                                                    doi = {10.1145/3317550.3321441},
+                                                                    booktitle = {Proceedings of the Workshop on Hot Topics in Operating Systems},
+                                                                    pages = {177–183},
+                                                                    numpages = {7},
+                                                                    location = {Bertinoro, Italy},
+                                                                    series = {HotOS ’19}
+                                                                    }
+
+                                                                    @book{tolstoy2016anna,
+                                                                title={Anna Karenina},
+                                                                author={Tolstoy, L. and Bartlett, R.},
+                                                                isbn={9780198748847},
+                                                                lccn={2015943753},
+                                                                series={Oxford world's classics},
+                                                                url={https://books.google.com/books?id=1DooDwAAQBAJ},
+                                                                year={2016},
+                                                                publisher={Oxford University Press}
+                                                              }
+                                                                    @article{FUKUSHIMA1982455,
+                                                                    title = "Neocognitron: A new algorithm for pattern recognition tolerant of deformations and shifts in position",
+                                                                    journal = "Pattern Recognition",
+                                                                    volume = "15",
+                                                                    number = "6",
+                                                                    pages = "455 - 469",
+                                                                    year = "1982",
+                                                                    issn = "0031-3203",
+                                                                    url = "http://www.sciencedirect.com/science/article/pii/0031320382900243",
+                                                                    author = "Kunihiko Fukushima and Sei Miyake",
+                                                                    }
+
+                                                                    @article{Jouppi2017,
+                                                                      author    = {Norman P. Jouppi and
+                                                                                   Cliff Young and
+                                                                                   Nishant Patil and
+                                                                                   David A. Patterson and
+                                                                                   Gaurav Agrawal and
+                                                                                   Raminder Bajwa and
+                                                                                   Sarah Bates and
+                                                                                   Suresh Bhatia and
+                                                                                   Nan Boden and
+                                                                                   Al Borchers and
+                                                                                   Rick Boyle and
+                                                                                   Pierre{-}luc Cantin and
+                                                                                   Clifford Chao and
+                                                                                   Chris Clark and
+                                                                                   Jeremy Coriell and
+                                                                                   Mike Daley and
+                                                                                   Matt Dau and
+                                                                                   Jeffrey Dean and
+                                                                                   Ben Gelb and
+                                                                                   Tara Vazir Ghaemmaghami and
+                                                                                   Rajendra Gottipati and
+                                                                                   William Gulland and
+                                                                                   Robert Hagmann and
+                                                                                   Richard C. Ho and
+                                                                                   Doug Hogberg and
+                                                                                   John Hu and
+                                                                                   Robert Hundt and
+                                                                                   Dan Hurt and
+                                                                                   Julian Ibarz and
+                                                                                   Aaron Jaffey and
+                                                                                   Alek Jaworski and
+                                                                                   Alexander Kaplan and
+                                                                                   Harshit Khaitan and
+                                                                                   Andy Koch and
+                                                                                   Naveen Kumar and
+                                                                                   Steve Lacy and
+                                                                                   James Laudon and
+                                                                                   James Law and
+                                                                                   Diemthu Le and
+                                                                                   Chris Leary and
+                                                                                   Zhuyuan Liu and
+                                                                                   Kyle Lucke and
+                                                                                   Alan Lundin and
+                                                                                   Gordon MacKean and
+                                                                                   Adriana Maggiore and
+                                                                                   Maire Mahony and
+                                                                                   Kieran Miller and
+                                                                                   Rahul Nagarajan and
+                                                                                   Ravi Narayanaswami and
+                                                                                   Ray Ni and
+                                                                                   Kathy Nix and
+                                                                                   Thomas Norrie and
+                                                                                   Mark Omernick and
+                                                                                   Narayana Penukonda and
+                                                                                   Andy Phelps and
+                                                                                   Jonathan Ross and
+                                                                                   Amir Salek and
+                                                                                   Emad Samadiani and
+                                                                                   Chris Severn and
+                                                                                   Gregory Sizikov and
+                                                                                   Matthew Snelham and
+                                                                                   Jed Souter and
+                                                                                   Dan Steinberg and
+                                                                                   Andy Swing and
+                                                                                   Mercedes Tan and
+                                                                                   Gregory Thorson and
+                                                                                   Bo Tian and
+                                                                                   Horia Toma and
+                                                                                   Erick Tuttle and
+                                                                                   Vijay Vasudevan and
+                                                                                   Richard Walter and
+                                                                                   Walter Wang and
+                                                                                   Eric Wilcox and
+                                                                                   Doe Hyun Yoon},
+                                                                      title     = {In-Datacenter Performance Analysis of a Tensor Processing Unit},
+                                                                      year      = {2017},
+                                                                      url       = {http://arxiv.org/abs/1704.04760},
+                                                                      eprint    = {1704.04760},
+                                                                    }
+
+                  @ARTICLE{hooker2019selective,
+                         author = {{Hooker}, Sara and {Courville}, Aaron and {Clark}, Gregory and
+                           {Dauphin}, Yann and {Frome}, Andrea},
+                          title = "{What Do Compressed Deep Neural Networks Forget?}",
+                       url = {https://arxiv.org/abs/1911.05248},
+                       }
+
+
+                                                                    @article{1995thinkingmachines,
+                                                                    title = {The Rise and Fall of Thinking Machines},
+                                                                    author = {Gary Taubes},
+                                                                    year = {1995},
+                                                                    url = {https://www.inc.com/magazine/19950915/2622.html},
+                                                                    }
+
+                                                                    @article{Chellapilla2006,
+                                                                    title={High Performance Convolutional Neural Networks for Document Processing},
+                                                                    author={Chellapilla, Kumar and Puri, Sidd and Simard, Patrice},
+                                                                    year={2006},
+                                                                    month={10},
+                                                                    }
+
+                                                                    @inbook{1988rumelhart,
+                                                                    author = {Rumelhart, David E. and Hinton, Geoffrey E. and Williams, Ronald J.},
+                                                                    title = {Learning Representations by Back-Propagating Errors},
+                                                                    year = {1988},
+                                                                    publisher = {MIT Press},
+                                                                    booktitle = {Neurocomputing: Foundations of Research},
+                                                                    pages = {696–699},
+                                                                    numpages = {4}
+                                                                    }
+
+                                                                    @article{Demuth93neuralnetwork,
+                                                                       author = {Howard Demuth and Mark Beale},
+                                                                       title = {Neural Network Toolbox For Use with Matlab - User Guide Verion 3.0},
+                                                                       year = {1993}
+                                                                    }
+
+
+                                                                    @article{piaget1954,
+                                                                     title={The construction of reality in the child},
+                                                                     author={Jean Piaget},
+                                                                     year={1954},
+                                                                    }
+
+                                                                    @book{1985understandingcomputers,
+                                                                    author = {Time-Life books},
+                                                                    title = {Understanding computers : software},
+                                                                    publisher = { Time - life books},
+                                                                    year = {1985}, address = {Virginia}}
+
+                                                                    @inbook{2003Gitelman,
+                                                                    title = "How Users Define New Media: A History of the Amusement Phonograph",
+                                                                    author = "Lisa Gitelman",
+                                                                    year = "2003",
+                                                                    language = "English (US)",
+                                                                    editor = "Thorburn, {David } and Jenkins, {Henry }",
+                                                                    booktitle = "Rethinking Media Change",
+                                                                    publisher = "MIT Press",
+                                                                    }
+
+                                                                    @incollection{NIPS2012_4824,
+                                                                    title = {ImageNet Classification with Deep Convolutional Neural Networks},
+                                                                    author = {Alex Krizhevsky and Sutskever, Ilya and Hinton, Geoffrey E},
+                                                                    booktitle = {Advances in Neural Information Processing Systems 25},
+                                                                    pages = {1097--1105},
+                                                                    year = {2012},
+                                                                    url = {http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf}
+                                                                    }
+        </script>
+
+        <script
+          language="javascript"
+          type="text/javascript"
+          src="lib/jquery-1.12.4.min.js"
+        ></script>
+           </div>
+    </div>
+  </body>
+</html>
