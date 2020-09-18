@@ -227,70 +227,39 @@
               margin-left: auto;
             }
 
-            @media (min-width: 415px) {
-              authors .authors-affiliations,
-              .base-grid,
-              .imgs-container .cover-container,
-              .descriptions_,
-              .description_,
-            .subdescriptions_,
-            .subdescription_,
-              .notepaper
-              .column_portfolio {
-                width: 385px;
-              }
-              .column_portfolio_
-              .notepaper,
-                .column_portfolio
-                figcaption {
-                padding: 0;
-                padding-top: 4px;
-                word-wrap: break-word;
-                word-break: break-word;
-              }
-            }
 
-            @media (min-width: 768px) {
-              authors .authors-affiliations,
-              .imgs-container,
-              .cover-container,
-              .descriptions_,
-                      .subdescriptions_,
-              .notepaper,
-            .subdescription_,
-              .description_,
-              .column_portfolio {
-                width: 700px;
-              }
-            }
-
-            @media (min-width: 992px) {
-              authors .authors-affiliations,
-              .imgs-container,
-              .cover-container,
-              .descriptions_,
-              .description_,
-              .notepaper,
-          .subdescriptions_,
-            .subdescription_,
-              .column_portfolio {
-                width: 800px;
-              }
-            }
-
-            @media (min-width: 1200px) {
-              authors .authors-affiliations,
-              .imgs-container,
-              .cover-container,
-              .notepaper,
-              .descriptions_,
-              .subdescription_,
-              .subdescriptions_,
-              .description_,
-              .column_portfolio {
-                width: 1100px;
-              }
-            }
+ 
+    @media (min-width: 415px) {
+      authors .authors-affiliations,
+       .base-grid, .imgs-container
+      .cover-container, .descriptions_, .description_, .column_portfolio {
+        width: 385px;;
+      }
+      .column_portfolio_  .column_portfoliofinalfinal, .column_portfoliofinal .column_portfolio figcaption {
+        padding: 0;
+        padding-top: 4px;
+        word-wrap: break-word;
+        word-break: break-word;
+      }
+    }
+    @media (min-width: 768px) {
+      authors .authors-affiliations, .imgs-container, .column_portfoliofinalfinal,
+      .cover-container, .descriptions_, .description_, .column_portfolio, .column_portfolio_ ,.column_portfoliofinal {
+        width: 650px;
+      }
+    }
+    @media (min-width: 992px) {
+      authors .authors-affiliations, .imgs-container, .column_portfoliofinalfinal,
+      .cover-container, .descriptions_, .description_, .column_portfolio, .column_portfolio_ , .column_portfoliofinal  {
+        width: 770px;
+      }
+    }
+    @media (min-width: 1200px) {
+      authors .authors-affiliations, .imgs-container,  .column_portfolio_, .column_portfoliofinalfinal ,
+      .cover-container, .descriptions_, .description_, .column_portfolio, .column_portfoliofinal {
+        width: 970px;
+      }
+    }
 
             .cover h1 {
               font-family: "Roboto", "Gotham A", "Gotham B";
@@ -787,13 +756,27 @@
             Moore’s law combined with Dennard scaling
             <dt-cite key="1050511"></dt-cite> enabled a factor of three
             magnitude increase in microprocessor performance between 1980-2010
-            <dt-cite key="computerhistorymuseum"></dt-cite> . The predictable
+            <dt-cite key="computerhistorymuseum"></dt-cite>. The predictable
             increases in compute and memory every two years meant hardware
             design became risk-adverse. Even for tasks which demanded higher
             performance, the benefits of moving to specialized hardware could be
             quickly eclipsed by the next generation of general purpose hardware
             with ever growing compute.
           </p>
+          
+            <div class="content_reduced">
+              <img
+                src="https://cdn.glitch.com/e7ea468b-4014-49eb-aa1b-d0498fa920c7%2Fhardware_bytes.jpg?v=1600437919583"
+                alt="abstract_1"
+                style="width:100%"
+              />
+              <div class="figcaption">
+                <strong_>Moore's law combined with Dennard Scaling
+            motivated a remarkable decline in the cost of transforming energy
+            into information over the next 50 years. Chip design became risk adverse
+                  because it was hard to motivate exploration when there were predictable gains in each new generation of hardware. </strong_><br />
+              </div>
+            </div>
 
           <p>
             The emphasis shifted to universal processors which could solve a
@@ -816,7 +799,7 @@
             />
             <div class="figcaption">
               <strong_
-                >The connection machine was one of the few examples of hardware
+                >The Connection Machine was one of the few examples of hardware
                 that deviated from general purpose cpus in the 1980s/90s.
                 Thinking Machines ultimately went bankrupt after inital
                 funding from DARPA dried up.</strong_
@@ -828,7 +811,7 @@
             independent has persisted until recently. It is expensive to explore
             new types of hardware, both in terms of time and capital required.
             Producing a next generation chip typically costs $30-80 million
-            dollars and 2-3 years to develop
+            dollars and takes 2-3 years to develop
             <dt-cite key="2019Feldman"></dt-cite>. These formidable barriers to
             entry have produced a hardware research culture that might feel odd
             or perhaps even slow to the average machine learning researcher.
@@ -846,8 +829,8 @@
             development, machine learning researchers rationally began to treat
             the hardware as a sunk cost to work around rather than something
             fluid that could be shaped. 
-            However, just because we believe the other has vanished doesn’t mean
-            that it has. Early computer science history tells us there are many
+            However, just because we have abstracted away hardware doesn’t mean
+            that it has disappeared. Early computer science history tells us there are many
             hardware lotteries where the choice of hardware and software has
             determined which ideas succeeded (and which failed).
           </p>
@@ -1026,7 +1009,7 @@
               a useful way for connectionist deep neural networks. Many
               inventions are re-purposed for means unintended by their
               designers. Edison’s phonograph was never intended to play music.
-              He envisioned it as preserving the last w ords of dying people or
+              He envisioned it as preserving the last words of dying people or
               teaching spelling. In fact, he was disappointed by its use playing
               popular music as he thought this was too “base” an application of
               his invention
@@ -1041,7 +1024,7 @@
               1970s as a specialized accelerator for video games and developing
               graphics for movies and animation. In the 2000s, like Edison’s
               phonograph, GPUs were re-purposed for an entirely unimagined use
-              case, to train deep neural networks
+              case -- to train deep neural networks
               <dt-cite
                 key="Chellapilla2006,OH20041311kyoung,claudiu2010,Fatahalian2004,Payne2005"
               ></dt-cite
@@ -1085,7 +1068,7 @@
               <img
                 src="https://cdn.glitch.com/e7ea468b-4014-49eb-aa1b-d0498fa920c7%2Fbyte_lisp.jpg?v=1587489227920"
                 alt="abstract_1"
-                style="width:70%"
+                style="width:100%"
               />
               <div class="figcaption">
                 <strong_
@@ -1297,10 +1280,10 @@
               <dt-cite key="2016Szegedy"></dt-cite> and Inception V4 architectures
               <dt-cite key="2015szegedy"></dt-cite>, (from 21.8 to 41.1
               million parameters), accuracy on ImageNet differs by less than 2%
-              between the two networks (78.8 vs 80 %)
+              between these two networks (78.8 vs 80 %)
               <dt-cite key="kornblith2018"></dt-cite>. The cost of throwing
               additional parameters at a problem is becoming painfully obvious.
-              The training of GPT-3 alone is estimated to exceed 12 million
+              The training of GPT-3 alone is estimated to exceed $12 million
               dollars <dt-cite key="wigger2020"></dt-cite>.
             </p>
 
@@ -1323,7 +1306,7 @@
               purpose algorithms like deep neural networks rely on global
               updates in order to learn a useful representation, our brains do
               not. Our own intelligence relies on decentralized local updates
-              which surface a global signal in ways that are not well understood
+              which surface a global signal in ways that are still not well understood
               <dt-cite key="LILLICRAP201982,Marblestone2016,Bi10464"></dt-cite>.
             </p>
 
@@ -1396,7 +1379,10 @@
                 style="width:100%"
               />
               <div class="figcaption">
-                <strong_>The Brains of Men and Machines</strong_><br />
+                <strong_>Human brains despite their
+              complexity remain extremely energy efficient. Our brain has over
+              85 billion neurons but runs on the energy equivalent of an
+              electric shaver.</strong_><br />
               </div>
             </div>
 
@@ -1581,7 +1567,7 @@
               </div>
 
               <p>
-                George Gilder, an American investor, described the
+                George Gilder, an American investor, powerfully described the
                 computer chip as “inscribing worlds on grains of sand”
                 <dt-cite key="gilder2000telecosm"></dt-cite>. The performance of
                 an algorithm is fundamentally intertwined with the hardware and
@@ -1612,7 +1598,7 @@
                   models that fulfill multiple desired criteria -- high
                   performance, interpretable, compact and robust. 
                   She is interested in the intersections between hardware,
-                  software and algorithms.
+                  software and algorithms. Correspondance about this essay can be sent to shooker@google.com.
                 </p>
                 <h3>Acknowledgments</h3>
                 <p>
@@ -1653,17 +1639,19 @@
   publisher={E.A. Posselt}
 }
 
-@ARTICLE{hooker2019selective,
-author = {{Hooker}, Sara and {Courville}, Aaron and {Clark}, Gregory and
-{Dauphin}, Yann and {Frome}, Andrea},
-title = "{What Do Compressed Deep Neural Networks Forget?}",
-url = {https://arxiv.org/abs/1911.05248},
+@misc{hooker2019,
+  title={Selective Brain Damage: Measuring the Disparate Impact of Model Pruning},
+  author={Sara Hooker and Aaron Courville and Yann Dauphin and Andrea Frome},
+  journal={ArXiv},
+  year={2019},
+  url={https://arxiv.org/abs/1911.05248},
+  volume={abs/1911.05248}
 }
 
 @ARTICLE{2019arXiv191111134E,
 author = {{Evci}, Utku and {Gale}, Trevor and {Menick}, Jacob and
 {Castro}, Pablo Samuel and {Elsen}, Erich},
-title = "{Rigging the Lottery: Making All Tickets Winners}",
+title = {Rigging the Lottery: Making All Tickets Winners},
 journal = {arXiv e-prints},
 keywords = {Computer Science - Machine Learning, Computer Science - Computer Vision and Pattern Recognition, Statistics - Machine Learning},
 year = 2019,
@@ -2945,7 +2933,8 @@ month = nov,
                           publisher="Springer US",
                           address="Boston, MA",
                           pages="243--252",
-                          abstract="Many AI tasks require extensive searching and processing within large data structures. Two example applications are semantic network processing [Higuchi et al, 1991], and maintaining hypothesis blackboards in a multi-agent knowledge-based system for speech understanding [Asanovi{\'{c}} and Chapman, 1988]. Associative processors promise significant improvements in cost/performance for these data parallel AI applications [Foster, 1976, Lea, 1977, Kohonen, 1980]. SPACE is an associative processor architecture designed to allow experimentation with such applications.",
+                          abstract="Many AI tasks require extensive searching and processing within large data structures. Two example applications are semantic network processing [Higuchi et al, 1991], and maintaining hypothesis blackboards in a multi-agent knowledge-based system for speech understanding [Asanovi{\'{c}} and Chapman, 1988]. Associative processors promise significant improvements in cost/performance for these data parallel AI applications
+                          [Foster, 1976, Lea, 1977, Kohonen, 1980]. SPACE is an associative processor architecture designed to allow experimentation with such applications.",
                           isbn="978-1-4899-1331-9",
                           doi="10.1007/978-1-4899-1331-9_24",
                           url="https://doi.org/10.1007/978-1-4899-1331-9_24"
@@ -3453,14 +3442,6 @@ month = nov,
                                                                       url       = {http://arxiv.org/abs/1704.04760},
                                                                       eprint    = {1704.04760},
                                                                     }
-
-                  @ARTICLE{hooker2019selective,
-                         author = {{Hooker}, Sara and {Courville}, Aaron and {Clark}, Gregory and
-                           {Dauphin}, Yann and {Frome}, Andrea},
-                          title = "{What Do Compressed Deep Neural Networks Forget?}",
-                       url = {https://arxiv.org/abs/1911.05248},
-                       }
-
 
                                                                     @article{1995thinkingmachines,
                                                                     title = {The Rise and Fall of Thinking Machines},
