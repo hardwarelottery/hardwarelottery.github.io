@@ -1,3 +1,8 @@
 # hardwarelottery.github.io
 
-This project is a website to accompany the essay Hardware Lottery: How Hardware and Software Determine What Research Ideas Succeed and Fail
+This project is a website to accompany the essay **The Hardware Lottery**
+
+Full paper here: https://arxiv.org/abs/2009.06489
+Website here:
+Contact author here: shooker@google.com
+
